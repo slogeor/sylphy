@@ -1,0 +1,48 @@
+// todo
+1、js代码review
+2、click事件
+5、懒加载
+6、设计稿和样式
+
+//待整理
+1、date
+2、param
+3、css效果(浮层、选中)
+4、表单校验(手机号、number、string、minlength、required、norequired)
+5、setTimeout
+6、代码重构
+7、position（高度问题）
+8、 空、空数组、空对象判断
+9、click事件替换
+
+
+
+
+
+ window.addEventListener('load', function() {
+    
+  }, false);
+
+  var test1 = document.getElementById('event-expand');
+    FastClick.attach(test1);
+    test1.addEventListener('click', function(event) {
+     // 事件类型
+      var $that = $(this),
+        type = $that.data('type');
+
+      //订单相关信息 
+      if (type === 'order') {
+        // show-->hide
+        $('#detail-event').toggleClass('hide');
+        // 箭头切换
+        $('#order-event').toggleClass('arrow-bottom');
+        $('#order-event').toggleClass('arrow-top');
+        return;
+      } else if (type === 'save-card') {
+        // reset
+        $('.event-expand').removeClass('m-current').find('.event-card-more').addClass('hide');
+        // active 当前
+        $that.addClass('m-current');
+        $that.find('.event-card-more').removeClass('hide');
+      }
+    }, false);
