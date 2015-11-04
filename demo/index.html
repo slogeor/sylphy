@@ -14,6 +14,86 @@
 7、position（高度问题）
 8、 空、空数组、空对象判断
 9、click事件替换
+10、把taobao的手机端首页的 font-size 搞明白了  基本你就可以入职淘宝了
+11、promise
+12、ajax
+13、全局谈层
+14、自动css前缀
+15、font
+16、 button disabled
+17、 事件管理器
+18、大字体
+
+//fb、twitter分享
+1、引入代码
+<script>
+    (function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/en_GB/sdk.js#xfbml=1&appId=1580688815485696&version=v2.3";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+  </script>
+
+  <script>
+    window.twttr = (function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0],
+      t = window.twttr || {};
+      if (d.getElementById(id)) return t;
+      js = d.createElement(s);
+      js.id = id;
+      js.src = "https://platform.twitter.com/widgets.js";
+      fjs.parentNode.insertBefore(js, fjs);
+
+      t._e = [];
+      t.ready = function(f) {
+        t._e.push(f);
+      };
+
+      return t;
+    }(document, "script", "twitter-wjs"));
+  </script>
+
+2、fb分享回调
+FB.ui(
+    {
+        method: 'feed',
+       name: option.title,
+        caption: '',
+        description: (option.description),
+        link: option.link,
+        picture: option.picture
+     },
+    function(response) {
+        if (response && response.post_id) {
+            option.callback();
+        }
+    }
+);
+
+2、twitter分享回调
+
+<a class="twitter-share-button" data-size='large' data-count='none' data-lang="en" data-text="share content" data-url="" href="https://twitter.com/share">Tweet</a>
+
+twttr.ready(function (twttr) {
+   twttr.events.bind('tweet', function() {
+       console.log('tw suc');
+   });
+});
+
+
+<meta name="twitter:card" content="photo" />
+<meta name="twitter:site" content="@mi.com/in" />
+<meta name="twitter:title" content="Mountain sunset" />
+<meta name="twitter:image" content="http://i3.mifile.cn/a4/T1oaZ_B4Vv1RXrhCrK.jpg" />
+<meta name="twitter:url" content="https://www.mi.com/in/" />
+
+window.open('http://twitter.com/share?url=' + loc + '&text=' + title + '&', 'twitterwindow', 'height=450, width=550, top=    '+($(window).height()/2 - 225) +', left='+$(window).width()/2 +', toolbar=0, location=0, menubar=0, directories=0, scrollbars=0');
+
+
+
+
 
 
 

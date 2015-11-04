@@ -1,0 +1,46 @@
+{
+  "name": "boilerplate",
+  "version": "1.0.0",
+  "description": "Download as ZIP, **don't clone this repo** if you want to create a new project. Only clone if you want to update/change the boilerplate.",
+  "main": "gulpfile.js",
+  "dependencies": {
+    "bower": "^1.3.12",
+    "del": "^1.1.1",
+    "gulp-autoprefixer": "^2.1.0",
+    "gulp": "^3.8.11",
+    "gulp-concat": "^2.5.1",
+    "gulp-minify-css": "^0.4.6",
+    "gulp-notify": "^2.2.0",
+    "gulp-rename": "^1.2.0",
+    "gulp-jshint": "^1.9.2",
+    "gulp-ruby-sass": "^1.0.0",
+    "gulp-uglify": "^1.1.0",
+    "main-bower-files": "git://github.com/ck86/main-bower-files"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://codeofsumit:091210sk@github.com/codeofsumit/boilerplate.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/codeofsumit/boilerplate/issues"
+  },
+  "homepage": "https://github.com/codeofsumit/boilerplate",
+  "devDependencies": {
+    "del": "^1.2.1",
+    "glob": "^5.0.15",
+    "gulp-changed": "^1.3.0",
+    "gulp-csslint": "^0.2.0",
+    "gulp-if": "^2.0.0",
+    "gulp-jshint": "^1.12.0",
+    "gulp-minify-html": "^1.0.4",
+    "gulp-rev": "^6.0.1",
+    "gulp-rev-collector": "^1.0.2",
+    "gulp-uglify": "^1.4.2",
+    "run-sequence": "^1.1.4"
+  }
+}
