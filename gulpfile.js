@@ -1,4 +1,4 @@
-/**
+/*
  * 插件
  * gulp: gulp插件
  * sequence: 任务队列
@@ -11,6 +11,7 @@
  * uglify: 代码混淆
  * rev: 版本号
  * revCollector: 添加版本号
+ * replace:  替换
  * changed: 文件改动
  * del: 删除文件
  */
@@ -25,12 +26,12 @@ var gulp = require('gulp'),
     uglify = require('gulp-uglify'),
     rev = require('gulp-rev'),
     revCollector = require('gulp-rev-collector'),
+    replace = require('gulp-replace'),
     changed = require('gulp-changed'),
     del = require('del');
 
 // csslint = require('gulp-csslint'),
 // stylish = require('jshint-stylish'),
-
 
 /**
  * 配置信息
@@ -51,6 +52,7 @@ var config = {
 /**
  * 文件路径
  * sassSrc: sass源文件
+ * sassPath: sass文件路径
  * cssFile: css文件
  * cssSrcPath: src目录css文件路径
  * cssPrdPath: prd目录css文件路径
@@ -59,7 +61,8 @@ var config = {
  * viewPrd: 目标模版文件
  */
 var sassSrc = ['/**/*.scss'],
-    cssSrcPath = config.srcPath + '/styles/modules',
+    sassPath = config.srcPath + '/styles/scss/modules',
+    cssSrcPath = config.srcPath + '/styles/css/modules',
     cssPrdPath = config.prdPath + '/styles/modules',
     jsSrc = config.srcPath + '/scripts/**/*.js',
     jsPrd = config.prdPath + '/scripts/**/*.js',
@@ -68,84 +71,120 @@ var sassSrc = ['/**/*.scss'],
     viewPrdPath = config.prdPath + '/views';
 
 
+//======================================
 /**
  * Function
  */
+//======================================
+
 // 改变sass文件路径
 function changeSassPath() {
     var nowSassSrc = [];
     for (var i = 0, len = sassSrc.length; i < len; i++) {
-        nowSassSrc.push(cssVerPath + sassSrc[i]);
+        nowSassSrc.push(sassPath + sassSrc[i]);
     }
+    console.log(nowSassSrc)
     return nowSassSrc;
 }
+
+//======================================
+/**
+ * gulp 任务
+ */
+//======================================
 
 //CSS里更新引入文件版本号
 gulp.task('revCollectorCss', function() {
     return gulp.src([cssVerPath + '/**/*.json', cssSrcPath + '/**/*.scss'])
-        .pipe(revCollector())
-        .pipe(gulp.dest(cssVerPath));
+        .pipe(revCollector());
 });
 
 //压缩/合并CSS/生成版本号
-gulp.task('minCss', function() {
+gulp.task('minDevCss', function() {
+    console.log(changeSassPath(),cssSrcPath)
     return gulp.src(changeSassPath())
         .pipe(sass())
-        .pipe(gulpif(
-            config.condition, minifyCss({
-                compatibility: 'ie7'
-            })
-        ))
-        .pipe(rev())
-        .pipe(gulpif(
-            config.condition, changed(cssPrdPath)
-        ))
+        //自动补全
         .pipe(autoprefixer({
             browsers: ['last 2 versions'],
             cascade: false,
             remove: false
         }))
-        .pipe(gulp.dest(cssPrdPath))
+        // css文件
+        .pipe(gulp.dest(cssSrcPath))
+        // 版本号
+        .pipe(rev())
         .pipe(rev.manifest())
         .pipe(gulp.dest(cssVerPath));
 });
 
+//压缩/合并CSS/生成版本号
+gulp.task('minPrdCss', function() {
+    return gulp.src(changeSassPath())
+        .pipe(sass())
+        //自动补全
+        .pipe(autoprefixer({
+            browsers: ['last 2 versions'],
+            cascade: false,
+            remove: false
+        }))
+        // css文件
+        .pipe(gulp.dest(cssSrcPath))
+        // 压缩
+        .pipe(minifyCss({
+            compatibility: 'ie7'
+        }))
+        // 版本号
+        .pipe(rev())
+        // 正式环境
+        .pipe(changed(cssPrdPath))
+        // 正式css文件
+        .pipe(gulp.dest(cssPrdPath))
+        // 版本号map
+        .pipe(rev.manifest())
+        .pipe(gulp.dest(cssVerPath));
+});
 
 //压缩Html/更新引入文件版本
 gulp.task('minHtml', function() {
     return gulp.src([cssVerPath + '/**/*.json', viewSrc])
         .pipe(revCollector())
-        .pipe(gulpif(
-            config.condition, minifyHtml({
-                empty: true,
-                spare: true,
-                quotes: true
-            })
-        ))
+        .pipe(minifyHtml({
+            empty: true,
+            spare: true,
+            quotes: true
+        }))
+        .pipe(replace('/src/', '/prd/'))
+        .pipe(replace('/css/', '/'))
         .pipe(gulp.dest(viewPrdPath));
 });
 
-//删除次css版本号
+//删除css版本号
 gulp.task('delRevCss', function() {
-    del([cssVerPath, cssVerPath.replace('src/', 'prd/')]);
+    del(cssVerPath);
 })
 
+// 删除css文件
+gulp.task('delPrdCss', function() {
+    del(cssPrdPath);
+})
 
-//开发构建
-gulp.task('dev', function (done) {
-    config.condition = false;
+//开发环境
+gulp.task('dev', function(done) {
     runSequence(
-         ['revCollectorCss'],
-         ['minCss'],
-         ['minHtml'],
-    done);
+        ['revCollectorCss'], ['minDevCss'],
+        done);
 });
 
 //prd
-gulp.task('prd', function (done) {
+gulp.task('prd', function(done) {
     runSequence(
-         ['revCollectorCss'],
-         ['minCss'],
-         ['minHtml', 'delRevCss'],
-    done);
+        ['delPrdCss', 'delRevCss'], ['revCollectorCss'], ['minPrdCss'], ['minHtml'],
+        done);
 });
+
+
+//TODO 
+/**
+ * 1、删除css改变
+ */
