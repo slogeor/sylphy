@@ -1,6 +1,7 @@
 /*
  * 插件
  * gulp: gulp插件
+ * webserver: web服务
  * sequence: 任务队列
  * gulpif: 条件判断
  * minifyHtml: html压缩
@@ -16,6 +17,7 @@
  * del: 删除文件
  */
 var gulp = require('gulp'),
+    webserver = require('gulp-webserver'),
     runSequence = require('run-sequence'),
     gulpif = require('gulp-if'),
     minifyHtml = require('gulp-minify-html'),
@@ -101,7 +103,7 @@ gulp.task('revCollectorCss', function() {
 
 //压缩/合并CSS/生成版本号
 gulp.task('minDevCss', function() {
-    console.log(changeSassPath(),cssSrcPath)
+    console.log(changeSassPath(), cssSrcPath)
     return gulp.src(changeSassPath())
         .pipe(sass())
         //自动补全
@@ -169,6 +171,43 @@ gulp.task('delPrdCss', function() {
     del(cssPrdPath);
 })
 
+// 监听文件
+gulp.task('watch', function() {
+    // scss文件
+    gulp.watch(changeSassPath(), ['minDevCss']);
+
+    // // 看守所有.js档
+    // gulp.watch('src/scripts/**/*.js', ['scripts']);
+
+    // // 看守所有图片档
+    // gulp.watch('src/images/**/*', ['images']);
+
+    // // 建立即时重整伺服器
+    // var server = livereload();
+
+    // // 看守所有位在 dist/  目录下的档案，一旦有更动，便进行重整
+    // gulp.watch(['dist/**']).on('change', function(file) {
+    //   server.changed(file.path);
+    // });
+
+});
+
+
+//webserver
+// gulp.task('webserver', function() {
+//     gulp.src('./sylphy')
+//         .pipe(webserver({
+//             livereload: true,
+//             directoryListing: {
+//                 enable: true,
+//                 path: 'sylphy'
+//             },
+//             host: '127.0.0.1',
+//             port: 8000
+//         }));
+// });
+
+
 //开发环境
 gulp.task('dev', function(done) {
     runSequence(
@@ -179,12 +218,13 @@ gulp.task('dev', function(done) {
 //prd
 gulp.task('prd', function(done) {
     runSequence(
-        ['delPrdCss', 'delRevCss'], ['revCollectorCss'], ['minPrdCss'], ['minHtml'],
+        ['delPrdCss', 'delRevCss'], 
+        ['revCollectorCss'], 
+        ['minPrdCss'], ['minHtml'],
         done);
 });
 
 
 //TODO 
-/**
- * 1、删除css改变
- */
+//1、删除css改变
+//2、webserver

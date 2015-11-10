@@ -1,0 +1,40 @@
+.hide {
+  display: none;
+}
+.main {
+  width: 80%;
+  margin: 0 auto;
+  background: #eee;
+}
+.clearfix {
+  *zoom: 1;
+}
+.clearfix:before, .clearfix:after {
+  display: table;
+  content: "";
+  line-height: 0;
+}
+.clearfix:after {
+  clear: both;
+}
+.main .left, .main .right {
+  float: left;
+  width: 45%;
+  padding: 20px;
+}
+
+.main .left div {
+  padding: 5px 0;
+}
+.main .left label {
+  display: block;
+  padding-bottom: 10px;
+}
+.main .left .label {
+  display: inline-block;
+}
+.main .left .valid-error {
+  color: red;
+}
+.main .right {
+}
