@@ -51,6 +51,10 @@
         // 额外的其他验证
         extValidate: function() {
             return true;
+        },
+
+        fnCB: function() {
+
         }
     };
 
@@ -99,11 +103,16 @@
      * @param  {Object}   objReg    [正则参数]
      */
     $.fn.resetParam = function(param) {
-        objParam = $.extend({}, objParam, param.objParam || {});
-        objReg = $.extend({}, objReg, param.objReg || {});
+        objParam = $.extend({}, objParam, param || {});
 
         // 优先级
         objParam.validateMode ? objParam.submitEnabled = false : objParam.submitEnabled = true;
+        return $(this);
+    };
+
+    //resete  正则
+    $.fn.resetReg = function(param) {
+        objReg = $.extend({}, objReg, param || {});
         return $(this);
     };
 
@@ -113,16 +122,14 @@
      * @param {Function} extValidate 额外验证
      */
     $.fn.validateAll = function(factory) {
-        var type = $.util.type(factory).toLowerCase(),
-            //回调函数
-            fn = '';
+        var type = $.util.type(factory).toLowerCase();
 
         //参数类型判断
         if (type === 'object') {
-            fn = factory.fn;
+            objParam.fnCB = factory.fnCB;
             objParam.extValidate = factory.extValidate;
         } else if (type === 'function') {
-            fn = factory;
+            objParam.fnCB = factory;
         }
 
         //更新formId
@@ -133,14 +140,14 @@
         objParam.submitEnabled ? $btnId.removeAttr('disabled') : $btnId.attr('disabled', true);
 
         //验证方式
-        objParam.validateMode ? $.validate.validateInputEvent(fn) : $.validate.validateForm(fn);
+        objParam.validateMode ? $.validate.validateInputEvent() : $.validate.validateForm();
     };
 
     //校验
     $.validate = (function() {
         return {
             //事件入口
-            validateInputEvent: function(fn) {
+            validateInputEvent: function() {
                 // input事件
                 $(objParam.formId).on('input', objParam.className, function() {
                     /**
@@ -214,7 +221,7 @@
                             formState ? $($btnId).removeAttr('disabled') : $($btnId).attr('disabled', true);
                         }
                     }
-                    return fn(formState);
+                    objParam.fnCB(formState);
                 });
 
                 //blur事件
@@ -243,6 +250,7 @@
 
             //radio、checkbox
             validateCheckEvent: function() {
+                var formState = false;
                 //单选、多选
                 $(objParam.formId).on('click', 'input', function() {
                     var type = $(this).attr('type');
@@ -264,7 +272,7 @@
                     if (objParam.validateMode) {
                         // 即时校验
                         //全局校验
-                        var formState = $.validate.validateState() && objParam.extValidate();
+                        formState = $.validate.validateState() && objParam.extValidate();
 
                         var $btnId = $(objParam.formId).find(objParam.btnClass);
 
@@ -273,6 +281,8 @@
                             formState ? $($btnId).removeAttr('disabled') : $($btnId).attr('disabled', true);
                         }
                     }
+
+                    objParam.fnCB(formState);
                 });
             },
 
@@ -304,8 +314,8 @@
                 }
 
                 //空
-                if (!value && !~rules.indexOf('norequired')) {
-                    return -1;
+                if (!value && !!~rules.indexOf('norequired')) {
+                    return 1;
                 }
 
                 //判断数据类型
@@ -329,7 +339,8 @@
                         var reg = new RegExp(res, 'gim');
                         if (!reg.test(value)) {
                             // 不显示错误信息
-                            flag = -1;
+                            return -1;
+
                         }
                     }
 
@@ -338,7 +349,7 @@
                         res = item.match(/^minlength_(\d+)$/i);
                         var minLen = res && (res[1] - 0);
                         if (strLen < minLen) {
-                            flag = -1;
+                            return -1;
                         }
                     }
 
@@ -348,7 +359,7 @@
                         var fixLen = res && (res[1] - 0);
 
                         if (strLen !== fixLen) {
-                            flag = 0;
+                            return 0;
                         }
                     }
 
@@ -358,7 +369,7 @@
                         var maxVal = res && (res[1] - 0);
 
                         if (value - 0 > maxVal - 0) {
-                            flag = 0;
+                            return 0;
                         }
                     }
 
@@ -368,12 +379,8 @@
                         var minVal = res && (res[1] - 0);
 
                         if (value - 0 < minVal - 0) {
-                            flag = 0;
+                            return 0;
                         }
-                    }
-
-                    if (flag !== 1) {
-                        return flag;
                     }
                 }
                 return flag;
@@ -394,7 +401,21 @@
             },
 
             //submit验证
-            validateForm: function(fn) {
+            validateForm: function() {
+                var  validateDom =$(objParam.formId).find(objParam.className);
+                for(var i = validateDom.length - 1; i > -1; i--) {
+                    var $dom =  $(validateDom[i]);
+                    var rules = $($dom).data('valid-rules');
+                    // 最大长度处理
+                    var regRes = rules.match(/maxlength_(\d+)$/i);
+                    regRes && regRes[1] && $($dom).attr('maxlength', regRes[1]);
+
+                    // 固定长度处理
+                    var lenRes = rules.match(/lengths_(\d+)$/i);
+                    lenRes && lenRes[1] && $($dom).attr('maxlength', lenRes[1]);
+                }
+
+
                 $(objParam.formId).on('click', objParam.btnClass, function() {
                     $(objParam.formId).find(objParam.errorClass).hide();
 
@@ -447,9 +468,9 @@
                             }
                         }
                     }
-                    fn(objParam.extValidate() && flag);
+                    objParam.fnCB(objParam.extValidate() && flag);
                 });
-                $.validate.validateCheckEvent();
+                $.validate.validateCheckEvent(objParam.fnCB);
             }
         };
     })();

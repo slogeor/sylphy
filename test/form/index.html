@@ -13,8 +13,23 @@
     <div class="main clearfix">
         <div class="left">
             <h3>移动端表单校验</h3>
-            <form id="validateForm"  onsubmit="return false">
+            <form id="validateForm" method="post" onsubmit="return false">
                 <div>
+                    <label>email-norequired:</label>
+                    <input type="text" class="validate" name="email11" data-valid-msg="111"
+                    data-valid-type="email" data-valid-state="1" data-valid-rules="norequired-minlength_10-maxlength_12"/>
+                    <div class="hide valid-error"></div>
+                </div>    
+
+                 <div>
+                    <label>email-required:</label>
+                    <input type="text" class="validate" name="number" data-valid-msg="error"
+                    data-valid-type="number" data-valid-state="0" data-valid-rules="required-max_45-min_12"/>
+                    <div class="hide valid-error"></div>
+                </div>   
+                
+
+                <!-- <div>
                     <label>radio:</label>
                     <input id="radio1" type="radio" class="radio" name="radio" />
                     <label class="label" for="radio1">yes</label>
@@ -24,9 +39,9 @@
                   
                     <input type="hidden" data-valid-state="0" class="validate" data-valid-msg="checkbox is null"/>
                     <div class="hide valid-error"></div>
-                </div>
+                </div> -->
           
-                <div>
+                <!-- <div>
                     <label>checkbox:</label>
                     <input id="checkbox1" type="checkbox" />
                     <label  class="label" for="checkbox1">A</label>
@@ -36,49 +51,49 @@
                     <label  class="label" for="checkbox3">C</label>
                     <input type="hidden" data-valid-state="0" class="validate" data-valid-msg="checkbox is null"/>
                     <div class="hide valid-error" id="demo"></div>
-                </div>
+                </div> -->
 
-                <div>
-                    <label>pattern:</label>
-                    <input type="text" class="validate" name="pattern" 
+                <!-- <div>
+                    <label>pattern:/^\d+$/</label>
+                    <input type="text" class="validate" name="pattern"  value="1212"
                     data-valid-type="pattern" data-valid-pattern="/^\d+$/" 
-                    data-valid-state="0"
+                    data-valid-state="1" 
                     data-valid-msg="pattern is error"/>
                     <div class="hide valid-error"></div>
                 </div>
 
                 <div>
-                    <label>email:</label>
+                    <label>email-norequired:</label>
                     <input type="text" class="validate" name="email" 
                     data-valid-type="email" data-valid-state="1" data-valid-rules="norequired"/>
                     <div class="hide valid-error"></div>
                 </div>
         
-                <!--<div>
+                <div>
                     <label>number:</label>
-                    <input type="text" class="validate" name="number" 
-                    data-valid-type="number" data-valid-state="0" />
+                    <input type="text" class="validate" name="number" value="3223"
+                    data-valid-type="number" data-valid-state="1" />
                     <div class="hide valid-error"></div>
                 </div>
             
                 <div>
                     <label>tel:</label>
-                    <input type="text" class="validate" name="tel" 
-                    data-valid-type="tel" data-valid-state="0" />
+                    <input type="text" class="validate" name="tel" value="18612897898"
+                    data-valid-type="tel" data-valid-state="1" />
                     <div class="hide valid-error"></div>
                 </div>
 
                 <div>
                     <label>zipcode:</label>
-                    <input type="text" class="validate" name="zipcode" 
-                    data-valid-type="zipcode" data-valid-state="0" />
+                    <input type="text" class="validate" name="zipcode" value="234567"
+                    data-valid-type="zipcode" data-valid-state="1" />
                     <div class="hide valid-error"></div>
                 </div>
 
                 <div>
                     <label>required:</label>
-                    <input type="text" class="validate" data-valid-type="string"
-                    data-valid-state="0"  data-rules='required'/>
+                    <input type="text" class="validate" data-valid-type="string" value="hello"
+                    data-valid-state="1"  data-rules='required'/>
                     <div class="hide valid-error"></div>
                 </div>
 
@@ -90,47 +105,47 @@
                 </div>
 
                 <div>
-                    <label>maxlength:</label>
-                    <input type="text" class="validate" data-valid-type="number"
-                        data-valid-state="0" data-valid-rules='maxlength_5'/>
+                    <label>maxlength_5:</label>
+                    <input type="text" class="validate" data-valid-type="string" value="slogeor"
+                        data-valid-state="1" data-valid-rules='maxlength_5'/>
                     <div class="hide valid-error"></div>
                 </div>
         
 
                 <div>
-                    <label>minlength:</label>
-                    <input type="text" class="validate" data-valid-type="number"
-                    data-valid-state="0"  data-valid-rules='minlength_5'/>
+                    <label>number-minlength_5:</label>
+                    <input type="text" class="validate" data-valid-type="number" value="123456"
+                    data-valid-state="1"  data-valid-rules='minlength_5'/>
                     <div class="hide valid-error"></div>
                 </div>
 
                 <div>
-                    <label>lengths:</label>
-                    <input type="text" class="validate" data-valid-type="number"
-                    data-valid-state="0"  data-valid-rules='lengths_5'/>
+                    <label>lengths_5:</label>
+                    <input type="text" class="validate" data-valid-type="string" value="slogo"
+                    data-valid-state="1"  data-valid-rules='lengths_5'/>
                     <div class="hide valid-error"></div>
                 </div>
 
                 <div>
-                    <label>max:</label>
-                    <input type="text" class="validate" data-valid-type="number"
-                    data-valid-state="0" data-valid-rules='max_5'/>
+                    <label>max_5:</label>
+                    <input type="text" class="validate" data-valid-type="number" value="2"
+                    data-valid-state="1" data-valid-rules='max_5'/>
                     <div class="hide valid-error"></div>
                 </div>
 
                 <div>
-                    <label>min:</label>
-                    <input type="text" class="validate" data-valid-type="number"
-                    data-valid-state="0" data-valid-rules='min_5'/>
+                    <label>min_5:</label>
+                    <input type="text" class="validate" data-valid-type="number" value="33"
+                    data-valid-state="1" data-valid-rules='min_5'/>
                     <div  class="hide valid-error"></div>
                 </div>
 
                 <div>
-                    <label>minlength:</label>
+                    <label>required-minlength_2-max_99:</label>
                     <input type="text" class="validate" data-valid-type="number"
-                    data-valid-state="0"  data-valid-rules='required-minlength_5'/>
+                    data-valid-state="0" data-valid-rules='required-minlength_2-max_99'/>
                     <div class="hide valid-error"></div>
-                </div>  -->
+                </div>   -->
                 <button class="valid-submit"> 提交</button>
             </form>
         </div>

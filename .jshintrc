@@ -1,0 +1,40 @@
+{
+    //启用位运算符
+    "bitwise": false, 
+    //必选使用花括号
+    "curly": true,
+    //强制三等号
+    "eqeqeq": true,
+    // 禁止重写原生对象的原型
+    "freeze": true,
+    // 代码缩紧
+    "indent": true,
+    //禁止变量先使用后定义
+    "latedef": "nofunc",
+    // 构造器首字母大写
+    "newcap": true,
+    // 变量未定义
+    "undef": true,
+    //变量未使用
+    "unused": true,
+    //严格模式
+    "strict": true,
+    //debugerr模式
+    "debug": false,
+    "evil": true,
+    //检查分号
+    "lastsemic": true,
+    // &&等运算符
+    "expr": true,
+    // 立即执行
+    "immed": true,
+    "noarg": true,
+    "noempty": true,
+    "quotmark": "single",
+    "node": true,
+    // 全局变量
+    "globals": {
+        "$": false,
+        "Zepto": false
+    }
+}
