@@ -282,7 +282,7 @@
                         }
                     }
 
-                    objParam.fnCB(formState);
+                    objParam.validateMode && objParam.fnCB(formState);
                 });
             },
 
@@ -406,6 +406,9 @@
                 for(var i = validateDom.length - 1; i > -1; i--) {
                     var $dom =  $(validateDom[i]);
                     var rules = $($dom).data('valid-rules');
+
+                    rules = rules ? rules.toLowerCase() : '';
+
                     // 最大长度处理
                     var regRes = rules.match(/maxlength_(\d+)$/i);
                     regRes && regRes[1] && $($dom).attr('maxlength', regRes[1]);

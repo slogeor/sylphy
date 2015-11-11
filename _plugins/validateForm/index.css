@@ -23,18 +23,16 @@
   padding: 20px;
 }
 
-.main .left div {
+.main .left div, .main .right div {
   padding: 5px 0;
 }
-.main .left label {
+.main .left label, .main .right label {
   display: block;
   padding-bottom: 10px;
 }
-.main .left .label {
+.main .left .label, .main .right .label {
   display: inline-block;
 }
-.main .left .valid-error {
+.valid-error {
   color: red;
-}
-.main .right {
 }
