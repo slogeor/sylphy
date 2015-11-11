@@ -3,29 +3,20 @@
  * @author slogeor
  * @date 2015-11-09
  */
-
+'use strict';
 (function($) {
     /**
      * 表单校验默认配置
      */
     var objParam = {
         /**
-         * 表单提交验证
+         * submit按钮可用
          * @map {
          *  true: 开启
          *  false: 禁用
          * }
          */
-        validateForm: true,
-
-        /**
-         * 禁用submit按钮
-         * @map {
-         *  true: 开启
-         *  false: 禁用
-         * }
-         */
-        submitEnabled: true,
+        submitEnabled: false,
 
         /**
          * 表单验证方式
@@ -34,17 +25,11 @@
          *  false: 提交验证
          * }
          */
-        validateMode: false,
+        validateMode: true,
 
+        //form表单id
+        formId: undefined,
 
-        // input绑定的class
-        className: '.validate',
-
-        //btn class
-        btnClass: '.valid-submit',
-
-        //error class        
-        errorClass: '.valid-error',
         /**
          * 错误提示方式
          * @map {
@@ -54,13 +39,19 @@
          */
         errorMode: true,
 
+        // input绑定的class
+        className: '.validate',
+
+        //btn class
+        btnClass: '.valid-submit',
+
+        //error class        
+        errorClass: '.valid-error',
+
         // 额外的其他验证
         extValidate: function() {
             return true;
-        },
-
-        //form表单id
-        formId: undefined
+        }
     };
 
     /**
@@ -70,6 +61,7 @@
      * ulr: url地址
      * tel: 电话号码
      * zipcode: code
+     * string: 默认的，非空
      */
     var objReg = {
         'email': '^[a-z0-9._%-]+@([a-z0-9-]+\\.)+[a-z]{2,4}$',
@@ -78,8 +70,6 @@
         'tel': '^1\\d{10}$',
         'zipcode': '^\\d{6}$',
         'string': '\\w+',
-        'radio': '',
-        'checkbox': '',
         'pattern': undefined
     };
 
@@ -111,6 +101,9 @@
     $.fn.resetParam = function(param) {
         objParam = $.extend({}, objParam, param.objParam || {});
         objReg = $.extend({}, objReg, param.objReg || {});
+
+        // 优先级
+        objParam.validateMode ? objParam.submitEnabled = false : objParam.submitEnabled = true;
         return $(this);
     };
 
@@ -119,18 +112,13 @@
      * @param {Function} fn          callback
      * @param {Function} extValidate 额外验证
      */
-
     $.fn.validateAll = function(factory) {
         var type = $.util.type(factory).toLowerCase(),
+            //回调函数
             fn = '';
 
-        /**
-         * 参数类型判断
-         * @param  {[type]} type [description]
-         * @return {[type]}      [description]
-         */
+        //参数类型判断
         if (type === 'object') {
-            //对象
             fn = factory.fn;
             objParam.extValidate = factory.extValidate;
         } else if (type === 'function') {
@@ -140,26 +128,18 @@
         //更新formId
         objParam.formId = '#' + $(this).closest('form').attr('id');
 
-        if (objParam.validateMode) {
-            //即时验证
-            $.validate.validateInputEvent(fn);
-        } else {
-            // 提交验证
-            $.validate.validateForm(fn);
-        }
+        //submit按钮可用性
+        var $btnId = $(objParam.formId).find(objParam.btnClass);
+        objParam.submitEnabled ? $btnId.removeAttr('disabled') : $btnId.attr('disabled', true);
 
-        // return $(this);
+        //验证方式
+        objParam.validateMode ? $.validate.validateInputEvent(fn) : $.validate.validateForm(fn);
     };
 
-    /**
-     * 校验规则
-     */
+    //校验
     $.validate = (function() {
         return {
-
-            /**
-             * 事件验证
-             */
+            //事件入口
             validateInputEvent: function(fn) {
                 // input事件
                 $(objParam.formId).on('input', objParam.className, function() {
@@ -168,21 +148,14 @@
                      * rules: 校验规则
                      * pattern: 正则规则
                      * value: input值
-                     * id: id选择器
-                     * typeList: 类型数组
                      */
                     var type = $(this).data('valid-type'),
                         rules = $(this).data('valid-rules'),
                         pattern = $(this).data('valid-pattern'),
-                        value = $.trim($(this).val()),
-                        id = $(this).attr('id'),
-                        typeList = ['number', 'tel'];
+                        value = $.trim($(this).val());
 
                     type = type ? type.toLowerCase() : '';
                     rules = rules ? rules.toLowerCase() : '';
-
-                    // 替换type，实现手机输入法状态切换
-                    !!~$.inArray(type, typeList) && $(this).attr('type', 'tel');
 
                     // 最大长度处理
                     var regRes = rules.match(/maxlength_(\d+)$/i);
@@ -192,7 +165,7 @@
                     var lenRes = rules.match(/lengths_(\d+)$/i);
                     lenRes && lenRes[1] && $(this).attr('maxlength', lenRes[1]);
 
-                    //错误信息
+                    //错误信息->hide
                     $(this).parent().find(objParam.errorClass).hide();
 
                     /**
@@ -201,33 +174,31 @@
                      * 0: 未通过，显示错误
                      * -1: 未通过，不显示错误
                      */
-                    var param = {
+                    var inputState = $.validate.validateInput({
                         'pattern': pattern,
                         'type': type,
                         'rules': rules,
                         'value': value
-                    };
-
-                    var inputState = $.validate.validateInput(param);
+                    });
                     $(this).data('valid-state', inputState);
 
+                    // 回调参数
                     var formState = false;
-
-                    var $selectId = $(objParam.formId).find(objParam.btnClass);
-
-                    console.log(inputState);
+                    
+                    // btn选择器
+                    var $btnId = $(objParam.formId).find(objParam.btnClass);
+                    // console.log(inputState);
                     if (inputState === 0) {
-                        //禁用
-                        if (objParam.submitEnabled) {
-                            $($selectId).attr('disabled', true);
-                        }
+                        //禁用按钮
+                        !objParam.submitEnabled && $($btnId).attr('disabled', true);
 
                         //错误信息
                         if (objParam.errorMode) {
                             var $errorId = $(this).parent().find(objParam.errorClass);
                             //错误信息
                             if (!$.trim($($errorId).html())) {
-                                $($errorId).html($(this).data('valid-msg')).show();
+                                var msg = $(this).data('valid-msg') || 'error';
+                                $($errorId).html(msg).show();
                             } else {
                                 $($errorId).show();
                             }
@@ -236,21 +207,14 @@
                         }
                     } else if (inputState === 1) {
                         //全局校验
-                        formState = $.validate.validateState();
-
-                        if (formState) {
-                            // 还原submit
-                            if (objParam.submitEnabled) {
-                                $($selectId).removeAttr('disabled');
-                            }
-                        } else {
-                            // 恢复disabled
-                            if (objParam.submitEnabled) {
-                                $($selectId).attr('disabled', true);
-                            }
+                        formState = $.validate.validateState() && objParam.extValidate();
+                        // 按钮
+                        if (!objParam.submitEnabled) {
+                            formState && $(objParam.formId).find(objParam.errorClass).hide();
+                            formState ? $($btnId).removeAttr('disabled') : $($btnId).attr('disabled', true);
                         }
                     }
-                    return fn(objParam.extValidate() && formState);
+                    return fn(formState);
                 });
 
                 //blur事件
@@ -260,7 +224,8 @@
                             var $errorId = $(this).parent().find(objParam.errorClass);
                             //错误信息
                             if (!$.trim($($errorId).html())) {
-                                $($errorId).html($(this).data('valid-msg')).show();
+                                var msg = $(this).data('valid-msg') || 'error';
+                                $($errorId).html(msg).show();
                             } else {
                                 $($errorId).show();
                             }
@@ -269,7 +234,11 @@
                         }
                     }
                 });
-                $.validate.validateCheckEvent();
+
+                // radio、checkbox
+                var checkbox = $(objParam.formId).find('input[type=\'checkbox\']'),
+                    radio = $(objParam.formId).find('input[type=\'radio\']');
+                (checkbox || radio) && $.validate.validateCheckEvent();
             },
 
             //radio、checkbox
@@ -278,38 +247,30 @@
                 $(objParam.formId).on('click', 'input', function() {
                     var type = $(this).attr('type');
                     var $id = $(this).parent().find(objParam.className);
+
                     if (type === 'radio') {
                         // 单选
                         $id.data('valid-state', 1);
                     } else if (type === 'checkbox') {
                         //多选
-                        var len = $("input[type='checkbox']:checked").length;
+                        var len = $('input[type=\'checkbox\']:checked').length;
 
                         // 默认是必选的
                         var rule = $id.data('valid-rules');
 
-                        if (rule === 'norequired') {
-                            $id.data('valid-state', 1);
-                        } else {
-                            $id.data('valid-state', len > 0 ? 1 : 0);
-                        }
+                        rule === 'norequired' ? $id.data('valid-state', 1) : $id.data('valid-state', len > 0 ? 1 : 0);
                     }
 
                     if (objParam.validateMode) {
                         // 即时校验
                         //全局校验
-                        var formState = $.validate.validateState();
+                        var formState = $.validate.validateState() && objParam.extValidate();
 
-                        var $selectId = $(objParam.formId).find(objParam.btnClass);
-                        if (formState) {
-                            // 还原submit
-                            if (objParam.submitEnabled) {
-                                $($selectId).removeAttr('disabled');
-                            }
-                        } else {
-                            if (objParam.submitEnabled) {
-                                $($selectId).attr('disabled', true);
-                            }
+                        var $btnId = $(objParam.formId).find(objParam.btnClass);
+
+                        if (!objParam.submitEnabled) {
+                            formState && $(objParam.formId).find(objParam.errorClass).hide();
+                            formState ? $($btnId).removeAttr('disabled') : $($btnId).attr('disabled', true);
                         }
                     }
                 });
@@ -342,7 +303,8 @@
                     regExp = new RegExp(objReg[type], 'gim');
                 }
 
-                if (!value) {
+                //空
+                if (!value && !~rules.indexOf('norequired')) {
                     return -1;
                 }
 
@@ -451,7 +413,7 @@
                         type = type ? type.toLowerCase() : '';
                         rules = rules ? rules.toLowerCase() : '';
 
-                        if(!type && !rules && $($currentId).data('valid-state') === 1) {
+                        if (!type && !rules && $($currentId).data('valid-state') === 1) {
                             continue;
                         }
 
