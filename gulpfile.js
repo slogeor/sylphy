@@ -13,6 +13,7 @@
  * rename: rename
  * rev: 版本号
  * revCollector: 添加版本号
+ * sourcemaps: sourceMap
  * replace:  替换
  * changed: 文件改动
  * clean: 清除文件
@@ -28,6 +29,7 @@ var gulp = require('gulp'),
     rename = require('gulp-rename'),
     rev = require('gulp-rev'),
     revCollector = require('gulp-rev-collector'),
+    sourcemaps = require('gulp-sourcemaps'),
     replace = require('gulp-replace'),
     changed = require('gulp-changed'),
     clean = require('gulp-clean');
@@ -63,7 +65,7 @@ var config = {
  * viewSrc: 源模版文件
  * viewPrd: 目标模版文件
  */
-var sassSrc = ['/**/*.scss'],
+var sassSrc = ['/**/*.scss', '/**/!a*.scss'],
     sassPath = config.srcPath + '/styles/scss/modules',
     cssSrcPath = config.srcPath + '/styles/css/modules',
     cssPrdPath = config.prdPath + '/styles/modules',
@@ -126,10 +128,12 @@ function gulpSass() {
 //js编译
 function gulpJS() {
     return gulp.src(changeJSPath())
+        .pipe(sourcemaps.init())
         .pipe(uglify().on('error', function(e) {
             console && console.log('\x07', e.lineNumber, e.message);
             return this.end();
-        }));
+        }))
+        .pipe(sourcemaps.write('./maps'));
 }
 //======================================
 /**
