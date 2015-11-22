@@ -65,17 +65,19 @@ var config = {
  * viewSrc: 源模版文件
  * viewPrd: 目标模版文件
  */
-var sassSrc = ['/**/*.scss', '/**/!a*.scss'],
-    sassPath = config.srcPath + '/styles/scss/modules',
-    cssSrcPath = config.srcPath + '/styles/css/modules',
-    cssPrdPath = config.prdPath + '/styles/modules',
-    cssVerPath = config.verPath + '/styles/modules',
+    //modules*: hack版本号
+var sassSrc = ['/modules*/**/*.scss'],
+    sassPath = config.srcPath + '/styles/scss',
+    cssSrcPath = config.srcPath + '/styles/css',
+    cssPrdPath = config.prdPath + '/styles',
+    cssVerPath = config.verPath + '/styles',
 
     //js
-    jsSrc = ['/**/*.js'],
-    jsSrcPath = config.srcPath + '/scripts/pages',
-    jsPrdPath = config.prdPath + '/scripts/pages',
-    jsVerPath = config.verPath + '/scripts/pages',
+    //pages*: hack版本号
+    jsSrc = ['/pages*/**/*.js'],
+    jsSrcPath = config.srcPath + '/scripts',
+    jsPrdPath = config.prdPath + '/scripts',
+    jsVerPath = config.verPath + '/scripts',
 
     libSrc = config.srcPath + '/scripts/libs/**/*.js',
     libPrdPath = config.prdPath + '/scripts/libs',
