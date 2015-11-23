@@ -1,0 +1,61 @@
+/**
+ * 文本相关
+ */
+
+//水平居中
+@mixin g-resize($width) {
+    width: $width;
+    margin: 0 auto;
+}
+//单行text垂直居中
+@mixin g-simple-center($height) {
+    height: $height;
+    line-height: $height;
+}
+//======多行文本垂直居中======
+@mixin g-middle-box {
+    display: table;
+}
+@mixin g-middle-outter {
+    display: table-cell;
+    text-align: center;
+    vertical-align: middle;
+}
+@mixin g-middle-inner {
+    display: inline-block;
+    *display: inline;
+    *zoom: 1;
+}
+
+//======文本截断======
+@mixin g-truncature($width) {
+    width: $width;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+//======inputbox======
+@mixin g-inputbox ($witdh:14rem, $height:1.9375rem) {
+    display: inline-block;
+    *display: inline;
+    *zoom: 1;
+    width: 14rem;
+    height: 1.9375rem;
+    margin-left: -0.25rem;
+    padding-left: 0.5rem;
+    letter-spacing: 0.25rem;
+    border: $borderWidth solid #eee;
+}
+//===== input number======
+@mixin g-input-number {
+    appearance: button;
+    cursor: pointer; /* 3 */
+}
+
+// Text overflow 兼容性处理
+@mixin g-text-overflow() {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}

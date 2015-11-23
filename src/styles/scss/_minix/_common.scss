@@ -1,0 +1,44 @@
+/**
+ * 常用的mixin
+ */
+//======inline-block======
+@mixin g-inline-block {
+    display: inline-block;
+    *display: inline;
+    *zoom: 1;
+}
+
+//======Placeholder 属性文本颜色======
+@mixin g-placeholder($color:$placeholderText) {
+  &:-moz-placeholder {
+    color: $color;
+  }
+  &:-ms-input-placeholder {
+    color: $color;
+  }
+  &::-webkit-input-placeholder {
+    color: $color;
+  }
+}
+//=======清除浮动======
+@mixin g-clearfix() {
+  *zoom: 1;
+
+  &:before, &:after {
+    display: table;
+    content: "";
+    line-height: 0;
+  }
+  &:after {
+    clear: both;
+  }
+}
+//=======等分区域块=====
+@mixin g-list {
+  display: table;
+  table-layout: fixed;
+  width: 100%;
+}
+@mixin g-sub-list {
+  display: table-cell;
+}

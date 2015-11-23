@@ -66,7 +66,7 @@ var config = {
  * viewPrd: 目标模版文件
  */
     //modules*: hack版本号
-var sassSrc = ['/modules*/**/*.scss'],
+var sassSrc = ['/pages*/**/*.scss'],
     sassPath = config.srcPath + '/styles/scss',
     cssSrcPath = config.srcPath + '/styles/css',
     cssPrdPath = config.prdPath + '/styles',
@@ -115,6 +115,7 @@ function changeJSPath() {
 
 //sass编译
 function gulpSass() {
+    console && console.log(changeSassPath(), cssSrcPath)
     return gulp.src(changeSassPath())
         .pipe(sass().on('error', sass.logError))
         //自动补全

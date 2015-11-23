@@ -1,0 +1,46 @@
+@import "../../_minix/_index.scss";
+
+body {
+    background-color: #ebe7e0;
+    font-size: p2r(24);
+}
+.m-image {
+    img {
+    width: 22.5rem;
+    }
+}
+.m-thumb-col-1 {
+    @extend .m-image;
+}
+.m-thumb-col-2 {
+    @include g-clearfix();
+
+    .m-image {
+        @include g-inline-block();
+
+        &:nth-child(1) {
+            float: left;
+
+            img {
+                width: 11.125rem;
+            }
+        }
+        &:nth-child(2) {
+            float: right;
+
+            img {
+                width: 11.125rem;
+            }
+        }
+    }
+}
+.container {
+    @include g-resize(22.5rem);
+    background-color: #fff;
+
+    section {
+        &:not(:first-child) {
+            margin-top: 0.5rem;
+        }
+    }
+}
