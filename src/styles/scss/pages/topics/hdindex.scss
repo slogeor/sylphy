@@ -5,42 +5,109 @@ body {
     font-size: p2r(24);
 }
 .m-image {
-    img {
-    width: 22.5rem;
-    }
+    width: 100%;
 }
-.m-thumb-col-1 {
-    @extend .m-image;
+.m-underline {
+    text-decoration: line-through;
 }
-.m-thumb-col-2 {
-    @include g-clearfix();
+.m-header {
+    @include g-simple-center(p2r(60));
+    color: #fff;
+    padding-left: .5rem;
+    background-color: #ea5742;
+    border-radius: .25rem;
+    box-sizing: box-sizing;
+}
+.m-more-btn {
+    display: block;
+    cursor: pointer;
+    padding: 0;
+    outline: 0;
+    color: #fff;
+    text-align: center;
+    background-color: #fc4b1e;
+    border-color: #fc4b1e;
+    border-radius: 0.25rem;
+    @include g-resize(6.25rem);
+    @include g-simple-center(2.125rem);
+}
+//flexbox
+.m-flex-row {
+    @include g-flex-wrap();
+    @include g-row-flex();
 
-    .m-image {
-        @include g-inline-block();
-
-        &:nth-child(1) {
-            float: left;
-
-            img {
-                width: 11.125rem;
-            }
-        }
-        &:nth-child(2) {
-            float: right;
-
-            img {
-                width: 11.125rem;
-            }
-        }
+    .m-flex-col {
+        @include g-flex-block(1);
     }
 }
 .container {
     @include g-resize(22.5rem);
     background-color: #fff;
+    line-height: 2;
 
     section {
         &:not(:first-child) {
-            margin-top: 0.5rem;
+            margin-top: 0.25rem;
+        }
+    }
+    a {
+        color: #000;
+    }
+    // 专题
+    .page-topic {
+    }
+    //配件
+    .page-accessory {
+        .accessory-list {
+            width: 100%;
+            @include g-clearfix();
+
+            .accessory-item {
+                float: left;
+                text-align: center;
+                border-bottom: 1px solid #e6e6e6;
+                padding-bottom: .5rem;
+                box-sizing: border-box;
+
+                .item-name {
+                    @include g-simple-center(1.5rem);
+                }
+                .item-price {
+                }
+                .item-buy {
+                    color: #fff;
+                }
+            }
+
+            .item-desc {
+                background-color: #fff;
+            }
+        }
+    }
+    .page-accessory2 {
+        background-color: #ebe7e0;
+    }
+
+    .list-item-col-2 {
+        li {
+            &:nth-child(odd) {
+                border-right: 1px solid #e6e6e6;
+            }
+            width: p2r(360);
+            .m-image {
+                width: 98%;
+            }
+        }
+    }
+    .list-item-col-3 {
+        li {
+            &:not(:nth-child(3n)) {
+                border-right: 1px solid #e6e6e6;
+            }
+            width: p2r(240);
+            .m-image {
+                width: 98%;
+            }
         }
     }
 }
