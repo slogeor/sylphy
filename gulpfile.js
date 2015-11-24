@@ -246,6 +246,7 @@ gulp.task('clean', function() {
 
 // 监听文件
 gulp.task('watch', function() {
+    console && console.log(changeSassPath())
     // scss文件
     gulp.watch(changeSassPath(), ['minDevCSS']);
 

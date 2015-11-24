@@ -12,11 +12,11 @@ body {
     text-decoration: line-through;
 }
 .m-header {
-    @include g-simple-center(p2r(60));
+    @include g-simple-center(60px);
     color: #fff;
-    padding-left: .5rem;
+    padding-left: 16px;
     background-color: #ea5742;
-    border-radius: .25rem;
+    border-radius: 8px;
     box-sizing: box-sizing;
 }
 .m-more-btn {
@@ -28,28 +28,33 @@ body {
     text-align: center;
     background-color: #fc4b1e;
     border-color: #fc4b1e;
-    border-radius: 0.25rem;
-    @include g-resize(6.25rem);
-    @include g-simple-center(2.125rem);
+    border-radius: 8px;
+    @include g-resize(200px);
+    @include g-simple-center(68px);
 }
-// flexbox
 .m-flex-row {
-    @include g-flex-wrap();
-    @include g-row-flex();
-
     .m-flex-col {
-        @include g-flex-block(1);
+        @include g-inline-block();
+        width: 100%;
     }
 }
+.m-flex-row2 {
+    @include g-clearfix();
 
+    .m-flex-col {
+        float: left;
+        width: 50%;
+    }
+}
 .container {
-    @include g-resize(22.5rem);
+    width: 960px;
+    margin: 0 auto;
     background-color: #fff;
     line-height: 2;
 
     section {
         &:not(:first-child) {
-            margin-top: 0.25rem;
+            margin-top: 8px;
         }
     }
     a {
@@ -62,7 +67,7 @@ body {
             right: 3%;
             top: 2%;
             color: #fff;
-            font-size: p2r(24);
+            font-size: 24px;
         }
     }
     // 专题
@@ -78,11 +83,11 @@ body {
                 float: left;
                 text-align: center;
                 border-bottom: 1px solid #e6e6e6;
-                padding-bottom: .5rem;
+                padding-bottom: 16px;
                 box-sizing: border-box;
 
                 .item-name {
-                    @include g-simple-center(1.5rem);
+                    @include g-simple-center(48px);
                 }
                 .item-price {
                 }
@@ -90,7 +95,6 @@ body {
                     color: #fff;
                 }
             }
-
             .item-desc {
                 background-color: #fff;
             }
@@ -99,19 +103,13 @@ body {
     .page-accessory2 {
         background-color: #ebe7e0;
     }
-
-    .list-item-col-1 {
-        li {
-            width: p2r(720);
-        }
-    }
-
     .list-item-col-2 {
         li {
             &:nth-child(odd) {
                 border-right: 1px solid #e6e6e6;
             }
-            width: p2r(360);
+            width: 50%;
+
             .m-image {
                 width: 98%;
             }
@@ -122,7 +120,20 @@ body {
             &:not(:nth-child(3n)) {
                 border-right: 1px solid #e6e6e6;
             }
-            width: p2r(240);
+            width: 33%;
+
+            .m-image {
+                width: 98%;
+            }
+        }
+    }
+    .list-item-col-4 {
+        li {
+            &:not(:nth-child(4n)) {
+                border-right: 1px solid #e6e6e6;
+            }
+            width: 25%;
+
             .m-image {
                 width: 98%;
             }
