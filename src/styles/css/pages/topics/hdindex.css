@@ -243,6 +243,7 @@ body {
   height: 1.875rem;
   line-height: 1.875rem;
   color: #fff;
+  font-size: 0.75rem;
   padding-left: .5rem;
   background-color: #ea5742;
   border-radius: .25rem;
@@ -310,7 +311,8 @@ body {
       text-align: center;
       border-bottom: 1px solid #e6e6e6;
       padding-bottom: .5rem;
-      box-sizing: border-box; }
+      box-sizing: border-box;
+      font-size: 0.75rem; }
       .container .page-accessory .accessory-list .accessory-item .item-name {
         height: 1.5rem;
         line-height: 1.5rem; }

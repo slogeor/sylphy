@@ -2,7 +2,7 @@
 
 body {
     background-color: #ebe7e0;
-    font-size: p2r(24);
+    font-size: 20px;
     font: 0.9375rem/1.5 "Hiragino Sans GB", "Helvetica", "STHeitiSC-Light", "\5B8B\4F53", arial, sans-serif;
 }
 .m-image {
@@ -14,10 +14,11 @@ body {
 .m-header {
     @include g-simple-center(60px);
     color: #fff;
+    font-size: 20px;
     padding-left: 16px;
     background-color: #ea5742;
     border-radius: 8px;
-    box-sizing: box-sizing;
+
 }
 .m-more-btn {
     display: block;
@@ -85,9 +86,10 @@ body {
                 border-bottom: 1px solid #e6e6e6;
                 padding-bottom: 16px;
                 box-sizing: border-box;
-
+                font-size: 20px;
                 .item-name {
                     @include g-simple-center(48px);
+
                 }
                 .item-price {
                 }
