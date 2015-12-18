@@ -5,9 +5,7 @@ body {
     font-size: p2r(24);
     font: 0.9375rem/1.5 "Hiragino Sans GB", "Helvetica", "STHeitiSC-Light", "\5B8B\4F53", arial, sans-serif;
 }
-.m-image {
-    width: 100%;
-}
+
 .m-underline {
     text-decoration: line-through;
 }
@@ -47,14 +45,14 @@ body {
     @include g-resize(22.5rem);
     background-color: #fff;
     line-height: 2;
-
-    section {
-        &:not(:first-child) {
-            margin-top: 0.25rem;
-        }
-    }
     a {
-        color: #000;
+       @include g-inline-block();
+       color: #000;
+    }
+    section {
+        // &:not(:first-child) {
+        //     margin-top: 0.25rem;
+        // }
     }
     .page-header {
         position: relative;
@@ -115,7 +113,7 @@ body {
             }
             width: p2r(360);
             .m-image {
-                width: 98%;
+                max-width: p2r(300);
             }
         }
     }

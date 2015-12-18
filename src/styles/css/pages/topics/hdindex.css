@@ -233,9 +233,6 @@ body {
   font-size: 0.75rem;
   font: 0.9375rem/1.5 "Hiragino Sans GB", "Helvetica", "STHeitiSC-Light", "\5B8B\4F53", arial, sans-serif; }
 
-.m-image {
-  width: 100%; }
-
 .m-underline {
   text-decoration: line-through; }
 
@@ -285,9 +282,10 @@ body {
   margin: 0 auto;
   background-color: #fff;
   line-height: 2; }
-  .container section:not(:first-child) {
-    margin-top: 0.25rem; }
   .container a {
+    display: inline-block;
+    *display: inline;
+    *zoom: 1;
     color: #000; }
   .container .page-header {
     position: relative; }
@@ -329,7 +327,7 @@ body {
     .container .list-item-col-2 li:nth-child(odd) {
       border-right: 1px solid #e6e6e6; }
     .container .list-item-col-2 li .m-image {
-      width: 98%; }
+      max-width: 9.375rem; }
   .container .list-item-col-3 li {
     width: 7.5rem; }
     .container .list-item-col-3 li:not(:nth-child(3n)) {
