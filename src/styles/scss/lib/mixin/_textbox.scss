@@ -1,0 +1,84 @@
+/**
+ * 文本相关
+ */
+
+//=======等分区域块=====
+@mixin g-list {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+}
+@mixin g-sub-list {
+    display: table-cell;
+}
+//======块元素居中======
+@mixin g-resize($width) {
+    width: $width;
+    margin-left: auto;
+    margin-right: auto;
+}
+//======当行文本======
+@mixin g-simple-text($w) {
+    width: $w;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+//======单行text垂直居中======
+@mixin g-simple-center($h) {
+    height: $h;
+    line-height: $h;
+}
+//======文本截断======
+@mixin g-text-truncature($w) {
+    width: $w;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+//=====垂直居中 position======
+@mixin g-position-multi-outer {
+    position: relative;
+}
+@mixin g-position-multi-inner {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin: auto;
+}
+//=====垂直居中 flex======
+@mixin g-flex-multi-outer {
+    display: flex;
+}
+@mixin g-flex-multi-inner {
+    margin: auto;
+}
+//=====垂直居中absolute + margin-left + margin-top ======
+@mixin g-absolute-multi-outer {
+    position: relative;
+}
+@mixin g-absolute--multi-inner($w, $h) {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: $w;
+    height: $h;
+    margin-left: $w/2;
+    margin-top: $h/2;
+}
+//=====垂直居中 table======
+@mixin g-table--multi-box {
+    display: table;
+}
+@mixin g-table--multi-outer {
+    display: table-cell;
+    text-align: center;
+    vertical-align: middle;
+}
+@mixin g-table--multi-inner {
+    display: inline-block;
+    *display: inline;
+    *zoom: 1;
+}

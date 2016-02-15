@@ -1,0 +1,85 @@
+/**
+ * 通用的scss
+ */
+
+//======内联元素、块元素======
+@mixin g-inline {
+    display: inline;
+}
+@mixin g-inline-block {
+    display: inline-block;
+    *display: inline;
+    *zoom: 1;
+}
+//======浮动======
+@mixin g-left {
+    display: inline;
+    float: left;
+}
+@mixin g-right {
+    display: inline;
+    float: right;
+}
+@mixin g-clearfix {
+    *zoom: 1;
+
+    &:before, &:after {
+        display: table;
+        content: "";
+        line-height: 0;
+    }
+    &:after {
+        clear: both;
+    }
+}
+//======显示、隐藏======
+@mixin g-hide {
+    display: none;
+}
+@mixin g-show {
+    @include g-inline-block();
+}
+//======placeholder效果======
+@mixin g-placeholder() {
+    color: #ccc;
+    font-weight: bold;
+}
+//=====css前缀======
+@mixin g-prefixer($property, $value, $prefixes:o webkit) {
+    #{$property}:$value;
+    -o-#{$property}:$value;
+    -ms-#{$property}:$value;
+    -moz-#{$property}:$value;
+    -webkit-#{$property}:$value;
+}
+//=====keyframs=====
+@mixin g-keyframes($animationName) {
+    @keyframes#{$animationName} {@content;}
+    @-moz-keyframes#{$animationName} {@content;}
+    @-webkit-keyframes#{$animationName} {@content;}
+}
+//=====回到顶部=====
+@mixin g-top($color) {
+    position: fixed;
+    left: 50%;
+    bottom: p2r(50);
+    width: p2r(60);
+    height: p2r(60);
+    opacity: 0;
+    color: #fff;
+    line-height: p2r(60);
+    font-size: p2r(20);
+    margin-left: 8rem;
+    border-radius: 50%;
+    text-align: center;
+    background-color: $color;
+    -webkit-transition: opacity 1s ease-in;
+    transition: opacity 1s ease-in;
+}
+//=====input number======
+@mixin g-input-number {
+    cursor: pointer;
+    appearance: button;
+    -webkit-appearance: button;
+    -moz-appearance: button;
+}

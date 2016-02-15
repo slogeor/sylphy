@@ -1,0 +1,23 @@
+/**
+ * flex布局
+ */
+
+//======伸缩容器======
+.g-flex-wrap {
+    display: box;
+    display: flex;
+}
+//======水平伸缩容器======
+.g-row-flex {
+    flex-flow: row wrap;
+    box-lines: multiple;
+    box-direction: normal;
+    box-orient: horizontal;
+}
+//======垂直伸缩容器======
+.g-col-flex {
+    box-lines: multiple;
+    flex-flow: column wrap;
+    box-orient: vertical;
+    box-direction: normal;
+}
