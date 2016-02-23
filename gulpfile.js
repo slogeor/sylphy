@@ -65,7 +65,7 @@ var config = {
  * viewSrc: 源模版文件
  * viewPrd: 目标模版文件
  */
-    //modules*: hack版本号
+//modules*: hack版本号
 var sassSrc = ['/pages*/**/*.scss'],
     sassPath = config.srcPath + '/styles/scss',
     cssSrcPath = config.srcPath + '/styles/css',
@@ -79,8 +79,8 @@ var sassSrc = ['/pages*/**/*.scss'],
     jsPrdPath = config.prdPath + '/scripts',
     jsVerPath = config.verPath + '/scripts',
 
-    libSrc = config.srcPath + '/scripts/libs/**/*.js',
-    libPrdPath = config.prdPath + '/scripts/libs',
+    libSrc = config.srcPath + '/scripts/lib/**/*.js',
+    libPrdPath = config.prdPath + '/scripts/lib',
 
     //html
     viewSrc = config.srcPath + '/views/**/*.html',
@@ -208,7 +208,7 @@ gulp.task('minLibJS', function() {
             suffix: '.min'
         }))
         .pipe(uglify().on('error', function(e) {
-           console && console.log('\x07', e.lineNumber, e.message);
+            console && console.log('\x07', e.lineNumber, e.message);
             return this.end();
         }))
         .pipe(changed(libPrdPath))
@@ -247,23 +247,11 @@ gulp.task('clean', function() {
 // 监听文件
 gulp.task('watch', function() {
     console && console.log(changeSassPath())
-    // scss文件
+        // scss文件
     gulp.watch(changeSassPath(), ['minDevCSS']);
 
     // js文件
     gulp.watch(changeJSPath(), ['minPrdJS']);
-
-    // // 看守所有图片档
-    // gulp.watch('src/images/**/*', ['images']);
-
-    // // 建立即时重整伺服器
-    // var server = livereload();
-
-    // // 看守所有位在 dist/  目录下的档案，一旦有更动，便进行重整
-    // gulp.watch(['dist/**']).on('change', function(file) {
-    //   server.changed(file.path);
-    // });
-
 });
 
 //开发环境
@@ -281,10 +269,11 @@ gulp.task('prd', function(done) {
 });
 
 //default
-
 gulp.task('default', function() {
     runSequence('watch');
 });
 
-//TODO 
-//1、删除css改变
+//TODO
+/**
+ * 1. require
+ */

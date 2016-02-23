@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <title>autoDisplay</title>
+    <link rel="stylesheet" href="">
+    <script>!function(n){var e=n.document,t=e.documentElement,i=720,o=i/32,a="orientationchange"in n?"orientationchange":"resize",d=function(){var n=t.clientWidth||320,n=n>720?720:320>n?320:n;t.style.fontSize=n/o+"px"};e.addEventListener&&n.addEventListener(a,d,!1),d()}(window);
+    </script>
+    <style>
+    html,body,ul,li {
+      margin: 0;
+      padding: 0;
+    }
+    body{
+      width: 22.5rem;
+      margin: 0 auto;
+      font-size: .75rem;
+      background-color: #eee;
+    }
+    h3 {
+      font-size: 1rem;
+      color:#f00;
+    }
+    ul {
+      list-style: none;
+    }
+    li {
+      height:50px;
+      line-height: 50px;
+      text-align: center;
+    }
+    /*flex*/
+    .flex-list {
+      display:flex;
+    }
+    .flex-list li {
+      flex: 1;
+    }
+    
+    /*float*/
+    .float-list {
+      overflow: hidden;
+    }
+    .float-list li {
+      float: left;
+      width: 240px;
+    }
+
+    /*inline-block*/
+    .inline-block-list {
+      font-size: 0;
+    }
+    .inline-block-list li{
+      font-size: .75rem;
+      display: inline-block;
+      *display: inline;
+      *zoom: 1;
+      width: 240px;
+    }
+
+    li:nth-child(2n) {
+      background-color: #666;
+    }
+    li:nth-child(2n+1) {
+      background-color: #999;
+    }
+    </style>
+  </head>
+  <body>
+    <h3>display:flex</h3>
+    <ul class="flex-list">
+      <li><span>html</span></li>
+      <li><span>js</span></li>
+      <li><span>css</span></li>
+      <li><span>php</span></li>
+      <li><span>java</span></li>
+    </ul>
+    <h3>float:left</h3>
+    <ul class="float-list">
+      <li><span>html</span></li>
+      <li><span>js</span></li>
+      <li><span>css</span></li>
+      <li><span>php</span></li>
+      <li><span>java</span></li>
+    </ul>
+    <h3>display:inline-block</h3>
+    <ul class="inline-block-list">
+      <li><span>html</span></li>
+      <li><span>js</span></li>
+      <li><span>css</span></li>
+      <li><span>php</span></li>
+      <li><span>java</span></li>
+    </ul>
+  </body>
+</html>

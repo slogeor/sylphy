@@ -1,144 +1,144 @@
-@import "../../_minix/_index.scss";
+// @import "../../_minix/_index.scss";
 
-body {
-    background-color: #ebe7e0;
-    font-size: 20px;
-    font: 0.9375rem/1.5 "Hiragino Sans GB", "Helvetica", "STHeitiSC-Light", "\5B8B\4F53", arial, sans-serif;
-}
-.m-image {
-    width: 100%;
-}
-.m-underline {
-    text-decoration: line-through;
-}
-.m-header {
-    @include g-simple-center(60px);
-    color: #fff;
-    font-size: 20px;
-    padding-left: 16px;
-    background-color: #ea5742;
-    border-radius: 8px;
+// body {
+//     background-color: #ebe7e0;
+//     font-size: 20px;
+//     font: 0.9375rem/1.5 "Hiragino Sans GB", "Helvetica", "STHeitiSC-Light", "\5B8B\4F53", arial, sans-serif;
+// }
+// .m-image {
+//     width: 100%;
+// }
+// .m-underline {
+//     text-decoration: line-through;
+// }
+// .m-header {
+//     @include g-simple-center(60px);
+//     color: #fff;
+//     font-size: 20px;
+//     padding-left: 16px;
+//     background-color: #ea5742;
+//     border-radius: 8px;
 
-}
-.m-more-btn {
-    display: block;
-    cursor: pointer;
-    padding: 0;
-    outline: 0;
-    color: #fff;
-    text-align: center;
-    background-color: #fc4b1e;
-    border-color: #fc4b1e;
-    border-radius: 8px;
-    @include g-resize(200px);
-    @include g-simple-center(68px);
-}
-.m-flex-row {
-    .m-flex-col {
-        @include g-inline-block();
-        width: 100%;
-    }
-}
-.m-flex-row2 {
-    @include g-clearfix();
+// }
+// .m-more-btn {
+//     display: block;
+//     cursor: pointer;
+//     padding: 0;
+//     outline: 0;
+//     color: #fff;
+//     text-align: center;
+//     background-color: #fc4b1e;
+//     border-color: #fc4b1e;
+//     border-radius: 8px;
+//     @include g-resize(200px);
+//     @include g-simple-center(68px);
+// }
+// .m-flex-row {
+//     .m-flex-col {
+//         @include g-inline-block();
+//         width: 100%;
+//     }
+// }
+// .m-flex-row2 {
+//     @include g-clearfix();
 
-    .m-flex-col {
-        float: left;
-        width: 50%;
-    }
-}
-.container {
-    width: 960px;
-    margin: 0 auto;
-    background-color: #fff;
-    line-height: 2;
+//     .m-flex-col {
+//         float: left;
+//         width: 50%;
+//     }
+// }
+// .container {
+//     width: 960px;
+//     margin: 0 auto;
+//     background-color: #fff;
+//     line-height: 2;
 
-    section {
-        &:not(:first-child) {
-            margin-top: 8px;
-        }
-    }
-    a {
-        color: #000;
-    }
-    .page-header {
-        position: relative;
-        .go-home {
-            position: absolute;
-            right: 3%;
-            top: 2%;
-            color: #fff;
-            font-size: 24px;
-        }
-    }
-    // 专题
-    .page-topic {
-    }
-    //配件
-    .page-accessory {
-        .accessory-list {
-            width: 100%;
-            @include g-clearfix();
+//     section {
+//         &:not(:first-child) {
+//             margin-top: 8px;
+//         }
+//     }
+//     a {
+//         color: #000;
+//     }
+//     .page-header {
+//         position: relative;
+//         .go-home {
+//             position: absolute;
+//             right: 3%;
+//             top: 2%;
+//             color: #fff;
+//             font-size: 24px;
+//         }
+//     }
+//     // 专题
+//     .page-topic {
+//     }
+//     //配件
+//     .page-accessory {
+//         .accessory-list {
+//             width: 100%;
+//             @include g-clearfix();
 
-            .accessory-item {
-                float: left;
-                text-align: center;
-                border-bottom: 1px solid #e6e6e6;
-                padding-bottom: 16px;
-                box-sizing: border-box;
-                font-size: 20px;
-                .item-name {
-                    @include g-simple-center(48px);
+//             .accessory-item {
+//                 float: left;
+//                 text-align: center;
+//                 border-bottom: 1px solid #e6e6e6;
+//                 padding-bottom: 16px;
+//                 box-sizing: border-box;
+//                 font-size: 20px;
+//                 .item-name {
+//                     @include g-simple-center(48px);
 
-                }
-                .item-price {
-                }
-                .item-buy {
-                    color: #fff;
-                }
-            }
-            .item-desc {
-                background-color: #fff;
-            }
-        }
-    }
-    .page-accessory2 {
-        background-color: #ebe7e0;
-    }
-    .list-item-col-2 {
-        li {
-            &:nth-child(odd) {
-                border-right: 1px solid #e6e6e6;
-            }
-            width: 50%;
+//                 }
+//                 .item-price {
+//                 }
+//                 .item-buy {
+//                     color: #fff;
+//                 }
+//             }
+//             .item-desc {
+//                 background-color: #fff;
+//             }
+//         }
+//     }
+//     .page-accessory2 {
+//         background-color: #ebe7e0;
+//     }
+//     .list-item-col-2 {
+//         li {
+//             &:nth-child(odd) {
+//                 border-right: 1px solid #e6e6e6;
+//             }
+//             width: 50%;
 
-            .m-image {
-                width: 98%;
-            }
-        }
-    }
-    .list-item-col-3 {
-        li {
-            &:not(:nth-child(3n)) {
-                border-right: 1px solid #e6e6e6;
-            }
-            width: 33%;
+//             .m-image {
+//                 width: 98%;
+//             }
+//         }
+//     }
+//     .list-item-col-3 {
+//         li {
+//             &:not(:nth-child(3n)) {
+//                 border-right: 1px solid #e6e6e6;
+//             }
+//             width: 33%;
 
-            .m-image {
-                width: 98%;
-            }
-        }
-    }
-    .list-item-col-4 {
-        li {
-            &:not(:nth-child(4n)) {
-                border-right: 1px solid #e6e6e6;
-            }
-            width: 25%;
+//             .m-image {
+//                 width: 98%;
+//             }
+//         }
+//     }
+//     .list-item-col-4 {
+//         li {
+//             &:not(:nth-child(4n)) {
+//                 border-right: 1px solid #e6e6e6;
+//             }
+//             width: 25%;
 
-            .m-image {
-                width: 98%;
-            }
-        }
-    }
-}
+//             .m-image {
+//                 width: 98%;
+//             }
+//         }
+//     }
+// }
