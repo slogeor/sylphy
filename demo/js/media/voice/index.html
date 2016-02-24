@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <title>音频声波</title>
+    <link rel="stylesheet" href="../../libs/css/reset.css">
+    <link rel="stylesheet" href="./css/index.css">
+    <script>!function(n){var e=n.document,t=e.documentElement,i=720,o=i/32,a="orientationchange"in n?"orientationchange":"resize",d=function(){var n=t.clientWidth||320,n=n>720?720:320>n?320:n;t.style.fontSize=n/o+"px"};e.addEventListener&&n.addEventListener(a,d,!1),d()}(window);
+    </script>
+  </head>
+  <body>
+     <div class="main-content">
+      <section class="header-page header-bg">
+        <div class="hd-middle">
+          <i class="bg-icon voice-icon1 J-voice"></i>
+          <i class="bg-icon voice-icon2 J-voice"></i>
+          <i class="bg-icon voice-icon3 J-voice"></i>
+          <i class="bg-icon voice-icon2 J-voice"></i>
+          <i class="bg-icon voice-icon1 J-voice"></i>
+          <i class="bg-icon voice-icon3 J-voice"></i>
+          <div class="ripple-inner ripple-animation1"></div>
+          <div class="ripple-animation2"></div>
+          <div class="ripple-animation3"></div>
+        </div>
+        <div class="hd-bottom">
+          <ul class="headerphone-list">
+            <li class="headerphone-item">
+              <div class="J-audio audio-item" data-num="1">
+                <i class="bg-icon sound-icon"></i>
+                <i class="turn-circle J-antimate"></i>
+              </div>
+              <div class="cont">動鐵發聲效果</div>
+            </li>
+            <li class="headerphone-item">
+              <div class="J-audio audio-item" data-num="2">
+                <i class="bg-icon sound-icon"></i>
+                <i class="turn-circle J-antimate"></i>
+              </div>
+              <div class="cont">動圈發聲效果</div>
+            </li>
+            <li class="headerphone-item">
+              <div class="J-audio audio-item" data-num="3">
+                <i class="bg-icon sound-icon"></i>
+                <i class="turn-circle J-antimate"></i>
+              </div>
+              <div class="cont">圈鐵發聲效果</div>
+            </li>
+          </ul>
+        </div>
+      </section>
+    </div>
+    <audio id="J-audio-1" class="audio-source" preload="none">
+      <source src="./audios/Balanced_Armature_USA.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="J-audio-2" class="audio-source" preload="none">
+      <source src="./audios/Dynamic_Drive_USA.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="J-audio-3" class="audio-source" preload="none">
+      <source src="./audios/P4_USA.mp3" type="audio/mpeg">
+    </audio>
+    <script src="../../libs/js/zepto.min.js"></script>
+    <script src="./js/index.js"></script>
+  </body>
+</html>

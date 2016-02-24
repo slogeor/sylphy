@@ -1,193 +1,220 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title></title>
-  <style>
-    html,body,h3,div {
-      margin: 0;
-      padding: 0;
-    }
-    body {
-      width: 960px;
-      margin: 0 auto;
-      font-size: 20px;
-    }
-    h3 {
-      margin: 20px 0;
-    }
-  </style>
-</head>
-<body>
-
-<h3>1. 单行文本水平垂直居中</h3>
-<h4>line-height + text-align:center</h4>
-<style>
-.wrap{
-  height: 100px;
-  line-height: 100px;
-  text-align: center;
-  background-color: #eee;
-}
-</style>
-<div class="wrap">
-  单行文本水平垂直居中单行文本水平垂直居中
-</div>
-
-<h3>2. absolute + margin-left + margin-top</h3>
-<h4>利用left: 50% 将盒子的左边先置于父容器的中点，然后再将盒子往左偏移自身宽度的50%</h4>
-<style>
-.wrap1 {
-  position: relative;
-  width: 100%;
-  height: 200px;
-  background-color: #eee;
-}
-.box1 {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  background-color: #ccc;
-}
-.margin1 {
-  width: 400px;
-  height: 100px;
-  margin-left: -200px;
-  margin-top: -50px;
-}
-</style>
-
-<div class="wrap1">  
-  <div class="box1 margin1">
-    <div>多行文本水平垂直居中单行文本水平垂直居中</div>  
-    <div>多行文本水平垂直居中单行文本水平垂直居中</div>  
-    <div>多行文本水平垂直居中单行文本水平垂直居中</div>  
-  </div>
-</div> 
-
-<h4>通过 transform 方法可以适用动态宽和高</h4>
-<style>
-  .translate1{
-  -webkit-transform:translate3d(-50%, -50%, 0);
-  transform:translate3d(-50%, -50%, 0);
-}
-</style>
-
-<div class="wrap1">  
-  <div class="box1 translate1">
-    <div>多行文本水平垂直居中单行文本水平垂直居中</div>  
-    <div>多行文本水平垂直居中单行文本水平垂直居中</div>  
-    <div>多行文本水平垂直居中单行文本水平垂直居中</div>  
-  </div>
-</div> 
-
-<h3>3. absolute + margin : auto</h3>
-<style>
-  .wrap2{
-  position: relative;
-  width: 960px;
-  height: 300px;
-  background-color: #ccc;
-}
-
-.box2{
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  margin: auto;
-  width: 300px;
-  height: 150px;
-  background-color: #eee;
-}
-</style>
-<div class="wrap2">  
-  <div class="box2">
-    <div>多行多行文本水平文本水平</div>  
-    <div>多行文本水平中</div>  
-    <div>多行文本水平中</div>  
-  </div>
-</div>  
-
-
-<h3>4.flex</h3>
-<h4>flex + align-items + justify-content</h4>
-<style>
-.wrap3{
-  width: 100%;
-  height: 300px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #ccc;
-}
-.box3{
-  background-color: #eee;
-}
-</style>
-<div class="wrap3">  
-  <div class="box3">
-    <div>多行多行文本水平文本水平</div>  
-    <div>多行文本水平中</div>  
-    <div>多行文本水平中</div>  
-  </div>
-</div> 
-
-<h4>flex + margin</h4>
-<style type="text/css">
-  .wrap4{
-  display: flex;
-  width: 100%;
-  height: 300px;
-  background-color: #ccc;
-}
-.box4{
-  background-color: #eee;
-  margin: auto;
-}
-</style>
-<div class="wrap4">  
-  <div class="box4">
-    <div>多行多行文本水平文本水平</div>  
-    <div>多行文本水平中</div>  
-    <div>多行文本水平中</div>  
-  </div>
-</div> 
-
-<h3>5.table</h3>
-<style>
-.wrap5{
-  width: 100%;
-  height: 300px;
-  display: table;
-  background-color: #ccc;
-}
-.box5{
-  text-align:center;
-  vertical-align: middle;
-  display:table-cell;
-}                
-
-.box-inner{
-  display: inline-block;
-  background-color: #eee;
-}
-</style>
-<div class='wrap5'>  
-  <div class='box5'>
-    <div class="box-inner">
-      <div>多行多行文本水平文本水平</div>  
-      <div>多行多行文本水平文本水平</div>  
-      <div>多行多行文本水平文本水平</div>  
-    </div>
-  </div>
-</div>
-
-<h3>参考链接</h3>
-<a href="http://f2e.souche.com/blog/jie-du-cssbu-ju-zhi-shui-ping-chui-zhi-ju-zhong/
-" target="_blank">http://f2e.souche.com/blog/jie-du-cssbu-ju-zhi-shui-ping-chui-zhi-ju-zhong/</a><br/><br/>
-<a href="http://slogeor.com/2016/01/25/vertical-center.html" target="_blank">http://slogeor.com/2016/01/25/vertical-center.html</a>
-</body>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>水平垂直居中</title>
+    <link rel="stylesheet" href="">
+    <style>
+      body,html,section,div,h3 {
+        padding: 0;
+        margin: 0;
+      }
+      body {
+        font-size: 14px;
+        width: 960px;
+        margin: 0 auto;
+        padding-bottom: 50px;
+        background-color: #aaa;
+      }
+      h3 {
+        font-size: 18px;
+        text-align: center;
+        background-color: #fff;
+        padding: 10px 0;
+      }
+      h4 {
+        text-align: center;
+        font-size: 16px;
+      }
+      section {
+        padding: 10px 10px 50px;
+        width: 800px;
+        margin: 0 auto;
+        border-bottom: 8px solid #ccc;
+        background-color: #fff;
+      }
+      header {
+        padding:20px 0;
+        text-align: center;
+        font-size: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <section>
+      <h3>1. 单行文本水平垂直居中</h3>
+      <h4>line-height + text-align:center</h4>
+      <style>
+        .wrap {
+          height: 100px;
+          line-height: 100px;
+          text-align: center;
+          background-color: #eee;
+        }
+      </style>
+      <div class="wrap"> 单行文本水平垂直居中单行文本水平垂直居中</div>
+    </section>
+    <section>
+      <h3>2. absolute + margin-left + margin-top</h3>
+      <h4>利用left: 50% 将盒子的左边先置于父容器的中点，然后再将盒子往左偏移自身宽度的50%</h4>
+      <style>
+        .wrap1 {
+          position: relative;
+          width: 800px;
+          height: 200px;
+          background-color: #eee;
+        }
+        .box1 {
+          position: absolute;
+          left: 50%;
+          top: 50%;
+          background-color: #ccc;
+        }
+        .margin1 {
+          width: 160px;
+          height: 100px;
+          margin-left: -80px;
+          margin-top: -50px;
+        }
+      </style>
+      <div class="wrap1">
+        <div class="box1 margin1">
+          <div>多行文本水平垂直居中单行文本水平垂直居中</div>
+          <div>多行文本水平垂直居中单行文本水平垂直居中</div>
+          <div>多行文本水平垂直居中单行文本水平垂直居中</div>
+        </div>
+      </div>
+    </section>
+    <section>
+      <h4>通过 transform 方法可以适用动态宽和高</h4>
+      <style>
+        .translate1{
+          -webkit-transform:translate3d(-50%, -50%, 0);
+          transform:translate3d(-50%, -50%, 0);
+        }
+      </style>
+      <div class="wrap1">
+        <div class="box1 translate1">
+          <div>多行文本水平垂直居中单行文本水平垂直居中</div>
+          <div>多行文本水平垂直居中单行文本水平垂直居中</div>
+          <div>多行文本水平垂直居中单行文本水平垂直居中</div>
+        </div>
+      </div>
+    </section>
+    <section>
+      <h3>3. absolute + margin : auto</h3>
+      <style type="text/css">
+        .wrap2{
+          position: relative;
+          width: 800px;
+          height: 200px;
+          background-color: #ccc;
+        }
+        .box2{
+          position: absolute;
+          left: 0;
+          right: 0;
+          top: 0;
+          bottom: 0;
+          margin: auto;
+          width: 150px;
+          height: 150px;
+          background-color: #eee;
+        }
+      </style>
+      <div class="wrap2">
+        <div class="box2">
+          <div>多行多行文本水平文本水平</div>
+          <div>多行文本水平中</div>
+          <div>多行文本水平中</div>
+        </div>
+      </div>
+    </section>
+    <section>
+      <h3>4.flex</h3>
+      <h4>flex + align-items + justify-content</h4>
+      <style>
+        .wrap3{
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 100%;
+          height: 300px;
+          background-color: #ccc;
+        }
+        .box3{
+          background-color: #eee;
+        }
+      </style>
+      <div class="wrap3">
+        <div class="box3">
+          <div>多行多行文本水平文本水平</div>
+          <div>多行文本水平中</div>
+          <div>多行文本水平中</div>
+        </div>
+      </div>
+    </section>
+    <section>
+      <h4>flex + margin</h4>
+      <style type="text/css">
+        .wrap6{
+          display: flex;
+          width: 100%;
+          height: 300px;
+          background-color: #ccc;
+        }
+        .box6{
+          background-color: #eee;
+          margin: auto;
+        }
+      </style>
+      <div class="wrap6">
+        <div class="box6">
+          <div>多行多行文本水平文本水平</div>
+          <div>多行文本水平中</div>
+          <div>多行文本水平中</div>
+        </div>
+      </div>
+    </section>
+    <section>
+      <h3>5.table</h3>
+      <style>
+        .wrap4{
+          width: 100%;
+          height: 300px;
+          display: table;
+          background-color: #ccc;
+        }
+        .box4{
+          text-align:center;
+          vertical-align: middle;
+          display:table-cell;
+        }
+        .box-inner{
+          font-size: 0;
+          display: inline-block;
+          background-color: #eee;
+        }
+      </style>
+      <div class='wrap4'>
+        <div class='box4'>
+          <div class="box-inner">
+            <img src="http://nec.netease.com/img/s/1.jpg" alt="" />
+            <img src="http://nec.netease.com/img/s/1.jpg" alt="" />
+          </div>
+        </div>
+        <div>
+      </div>
+    </section>
+    <section>
+      <h3>参考链接</h3>
+      <a href="http://f2e.souche.com/blog/jie-du-cssbu-ju-zhi-shui-ping-chui-zhi-ju-zhong/" target="_blank">
+        http://f2e.souche.com/blog/jie-du-cssbu-ju-zhi-shui-ping-chui-zhi-ju-zhong/
+      </a><br/><br/>
+      <a href="http://slogeor.com/2016/01/25/vertical-center.html" target="_blank">
+        http://slogeor.com/2016/01/25/vertical-center.html
+      </a>
+    </section>
+  </body>
 </html>

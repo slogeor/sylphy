@@ -63,11 +63,26 @@
       font-size: 0;
     }
     .inline-block-list li{
-      font-size: .75rem;
+      font-size: 24px;
       display: inline-block;
       *display: inline;
       *zoom: 1;
       width: 240px;
+    }
+     
+    /*inline-block元素的空白间距*/
+    .finally-solve {
+      letter-spacing: -4px;/*根据不同字体字号或许需要做一定的调整*/
+      word-spacing: -4px;
+      font-size: 0;
+    }
+    .finally-solve li {
+      font-size: 16px;
+      letter-spacing: normal;
+      word-spacing: normal;
+      display:inline-block;
+      *display: inline;
+      zoom:1;
     }
 
     li:nth-child(2n) {
