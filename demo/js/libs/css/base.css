@@ -1,7 +1,22 @@
 body {
-  width: 22.5rem;
-  min-height: 20rem;
-  margin: 0 auto;
   position: relative;
+  width: 22.5rem;
+  min-height: 30rem;
+  margin: 0 auto;
   background-color: #fff;
+}
+h3 {
+  font-size: 20px;
+  margin: .5rem 0;
+}
+section {
+  padding: .75rem;
+}
+.main {
+  font-size: 18px;
+  min-height: 25rem;
+  background-color: #eee;
+}
+.hide {
+  display: none;
 }
