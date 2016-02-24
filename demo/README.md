@@ -6,3 +6,6 @@
 
 3. <a href="http://slogeor.com/demo/js/media/audio/index.html" target="_blank">音频播放</a>
 
+4. <a href="http://slogeor.com/demo/js/media/video/index.html" target="_blank">视频播放</a>
+
+
