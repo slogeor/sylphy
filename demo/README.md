@@ -8,4 +8,6 @@
 
 4. <a href="http://slogeor.com/demo/js/media/video/index.html" target="_blank">视频播放</a>
 
+4. <a href="http://slogeor.com/demo/js/media/upload/index.html" target="_blank">上传预览</a>
+
 
