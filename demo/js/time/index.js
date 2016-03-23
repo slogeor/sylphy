@@ -1,3 +1,8 @@
+/**
+ * @description 倒计时
+ * @author slogeor
+ * @date 2015-03-22
+ */
 var time = {
   // 地区时区
   UTC_MAP: {

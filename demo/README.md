@@ -12,4 +12,6 @@
 
 5. <a href="http://slogeor.com/demo/mixin/check-install-app.html" target="_blank">检测是否安装APP</a>
 
+5. <a href="http://slogeor.com/demo/js/time/index.html" target="_blank">倒计时</a>
+
 
