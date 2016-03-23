@@ -1,76 +1,100 @@
- /**
-  * 倒计时
-  */
+/**
+ * @description 倒计时
+ * @author slogeor
+ * @date 2015-03-22
+ */
+var time = {
+  // 地区时区
+  UTC_MAP: {
+    'in': 5.5,
+    'tw': 8,
+    'hk': 8,
+    'ch': 8
+  },
+  /**
+   * 获取时间
+   * @param {String} time 时间戳
+   * @return {Date} 日期
+   * util.getUTCTime(1437530400000)
+   */
+  getUTCDate: function(time, nationCode) {
+    var _this = this;
 
- var util = window.S = window.S || {};
+    var timeBasis = time,
+      zoneNum = _this.UTC_MAP[nationCode] || 0,
+      dateBasis = new Date(timeBasis),
 
- util.timer = {
-   /**
-    * 倒计时
-    */
-   getTimer: function(obj, options) {
-     var settings = {
-       time: 60,
-       disabled: 'disabled',
-       text: 'Resend after %1s '
-     };
-     settings = $.extend(settings, options || {});
-     var $obj = $(obj),
-       sourceVal = $obj.val(),
-       sourceHtml = sourceVal ? sourceVal : $obj.html(),
-       text = settings.text.replace('%1', settings.time),
-       writeIn = function(content) {
-         if (sourceVal) {
-           $obj.val(content);
-         } else {
-           $obj.html(content);
-         }
-       },
-       countDown = function() {
-         if (settings.time > 0) {
-           settings.time--;
-           text = settings.text.replace('%1', settings.time);
-           writeIn(text);
-         } else {
-           writeIn(sourceHtml);
-           $obj.removeClass(settings.disabled);
-           clearInterval(window.xmCountDownTimer);
-         }
-       };
-     if (window.xmCountDownTimer) {
-       clearInterval(window.xmCountDownTimer);
-     }
-     window.xmCountDownTimer = setInterval(function() {
-       countDown();
-     }, 1000);
-     $obj.addClass(settings.disabled);
-     writeIn(text);
-   },
+      // 获取与格林威治标准时间 (GMT) 的分钟差
+      timeZone = dateBasis.getTimezoneOffset(),
 
-   /**
-   * 获取化倒计时
+      // 相差的毫秒
+      timeDis = (timeZone + zoneNum * 60) * 60 * 1000,
+
+      // 生成新的毫秒
+      newTime = timeBasis + timeDis;
+
+    return new Date(newTime);
+  },
+
+  /**
+   * 获取时间戳
+   * @param  {String} dateStr 日期字符串
+   * @return {Number} time  毫秒
+   * util.getUTCTime('2015/07/28 16:30:00') 
+   */
+  getUTCTime: function(dateStr, nationCode) {
+    var _this = this;
+
+    var dateBasis = new Date(dateStr),
+      zoneNum = _this.UTC_MAP[nationCode] || 0,
+
+      // 获取与格林威治标准时间 (GMT) 的分钟差
+      timeZone = dateBasis.getTimezoneOffset(),
+
+      // 毫秒差
+      timeDis = (timeZone + zoneNum * 60) * 60 * 1000,
+
+      // 时间戳
+      time = dateBasis.getTime() - timeDis;
+
+    return time;
+  },
+
+  /**
+   * 倒计时
    * @param  {String}    nationCode 国家码
+   * @param  {String}    startDate 开始的时间
    * @param  {String}    endDate 结束的时间
    * @param  {Boolean}   supportDay 是否支持天， 1: 支持, 0:不支持
-   * @param  {function}  callBack  回调函数
-   * @param  {function}  endCallBack  倒计时结束回调函数
-   * getCountDown('in', '2015/08/02 10:00:00', 1, callBack, endCallBack);
+   * @param  {function}  continueCB  回调函数
+   * @param  {function}  endCB  倒计时结束回调函数
+   * getCountDown('in', '2015/07/02 10:00:00', '2015/08/02 10:00:00', 1, continueCB, endCB);
    */
-  getCountDown: function(nationCode, endDate, supportDay, callBack, endCallBack) {
-    // 请求服务器时间的url
-    var url = XIAOMI.GLOBAL_CONFIG.damiaoSite + '/gettimestamp?_=' + new Date().getTime(),
-      timeDiff = 0,
-      endTime = this.getUTCTime(endDate, nationCode) / 1000;
+  getCountDown: function(option) {
+    // 初始化
+    var defaultOption = {
+      nationCode: undefined,
+      startDate: undefined,
+      endDate: undefined,
+      supportDay: 1,
+      continueCB: function() {},
+      endCB: function() {}
+    };
 
-    //获取时间戳 
-    $.ajax({
-      type: "GET",
-      url: url,
-      dataType: "jsonp",
-      // jsonpCallback:"resetServerTime",
-      error: function() {},
-      success: function(data) {}
-    });
+    //更新值
+    var param = $.extend(true, defaultOption, option);
+
+    // 请求服务器时间的url
+    var timeDiff = 0,
+      endTime = this.getUTCTime(param.endDate, param.nationCode) / 1000;
+    // console.log(endTime)
+
+    //没有指定开始时间，接口获取  
+    if (!param.startDate) {
+      window.servertime = parseInt(new Date().getTime() / 1000);
+    } else {
+      servertime = this.getUTCTime(param.startDate, param.nationCode) / 1000;
+    }
 
     // 定时器
     window.listenServerTime = setInterval(function() {
@@ -104,44 +128,88 @@
         servertime = parseInt(new Date().getTime() / 1000) + timeDiff;
         countDown();
       }, 1000);
-    };
+    }
 
     // 倒计时字符串
     function countDown() {
       var surplusTime = endTime - servertime;
 
       if (surplusTime > 0) {
+        // console.log(surplusTime)
         // 倒计时继续
         var second = Math.floor(surplusTime % 60),
-          minite = Math.floor((surplusTime / 60) % 60),
+          minute = Math.floor((surplusTime / 60) % 60),
           hour = Math.floor((surplusTime / 3600) % 24),
           day = Math.floor((surplusTime / 86400) % 30);
         servertime++;
 
-        var timeHtml = formatTime(day, hour, minite, second);
-        callBack(timeHtml);
+        var timeObj = formatTime(day, hour, minute, second);
+        param.continueCB(timeObj);
       } else {
         // 结束倒计时
-        endCallBack();
+        param.endCB();
         // 清除倒计时
         clearInterval(window.countDownTimer);
       }
-    };
+    }
 
-    function formatTime(day, hour, minite, second) {
-      var timeText = [];
-      if (supportDay === 1) {
+    //格式化时间字符串
+    function formatTime(day, hour, minute, second) {
+      // 时间对象
+      var timeObj = {
+        day: '',
+        hour: '',
+        minute: '',
+        second: ''
+      };
+
+      //添加0
+      var addZero = function(number) {
+        return ('0' + number).length > 2 ? number : '0' + number;
+      };
+
+      //赋值
+      if (param.supportDay === 1) {
         // 支持天
         if (day !== 0) {
-          timeText.push(day + 'd')
+          timeObj.day = addZero(day);
         }
       } else {
-        hour += day * 24;
+        hour += addZero(day * 24);
       }
-      timeText.push(hour + 'h')
-      timeText.push(minite + 'm')
-      timeText.push(second + 's')
-      return timeText.join(': ')
-    };
+
+      if (!timeObj.day) {
+        delete timeObj.day;
+      }
+
+      timeObj.hour = addZero(hour);
+      timeObj.minute = addZero(minute);
+      timeObj.second = addZero(second);
+
+      return timeObj;
+    }
+  },
+
+  /**
+   * 一分钟倒计时
+   * startCB: 开始回调
+   * endCB: 结束回调
+   */
+  minTimer: function(option) {
+    var defaultOption = {
+        'continueCB': undefined,
+        'endCB': undefined
+      },
+      leftTime = 60;
+
+    var param = $.extend(true, defaultOption, option);
+
+    window.countDownMinTimer = setInterval(function() {
+      if (leftTime-- > 0) {
+        param.continueCB(leftTime);
+      } else {
+        param.endCB();
+      }
+    }, 1000);
   }
- };
+};
