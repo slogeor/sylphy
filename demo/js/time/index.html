@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <title>倒计时</title>
+    <style>
+      body {
+        width: 22.5rem;
+        margin: 0 auto;
+        background-color: #eee;
+      }
+      .inline-block {
+        display: inline-block;
+      }
+      .min-time {
+        color: #f00;
+        cursor: pointer;
+      }
+    </style>
+    <script>!function(n){var e=n.document,t=e.documentElement,i=720,o=i/32,a="orientationchange"in n?"orientationchange":"resize",d=function(){var n=t.clientWidth||320,n=n>720?720:320>n?320:n;t.style.fontSize=n/o+"px"};e.addEventListener&&n.addEventListener(a,d,!1),d()}(window);
+    </script>
+  </head>
+  <body>
+    <h3>倒计时</h3>
+    <div class="inline-block">倒计时:&nbsp;</div>
+    <div id="cutdown-time" class="inline-block">
+      loading...
+    </div>
+    <hr/>
+    
+    <h3>分钟倒计时</h3>
+    <div class="inline-block">分钟倒计时:&nbsp;</div>
+    <div id="min-time" class="inline-block min-time">
+      点击开始倒计时
+    </div>
+
+    <hr/>
+    <h3>源代码</h3>
+    <div class="inline-block">源代码:&nbsp;</div>
+    <div id="min-time" class="inline-block min-time">
+      点击查看
+    </div>
+
+
+    <script src="../libs/js/zepto.min.js"></script>
+    <script src="./index.js"></script>  
+  </body>
+</html>
