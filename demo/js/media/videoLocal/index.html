@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <title>本地视频播放效果</title>
+    <link rel="stylesheet" href="../../libs/css/reset.css">
+    <link rel="stylesheet" href="./index.css">
+    <script>!function(n){var e=n.document,t=e.documentElement,i=720,o=i/32,a="orientationchange"in n?"orientationchange":"resize",d=function(){var n=t.clientWidth||320,n=n>720?720:320>n?320:n;t.style.fontSize=n/o+"px"};e.addEventListener&&n.addEventListener(a,d,!1),d()}(window);
+    </script>
+  </head>
+  <body>
+    <div class="main" id="J_main">
+      <section class="wrap-video">
+        <video class="m-video hide J_video" id="J_play1" data-index="1">
+          <source type="video/webm" data-src="//i01.appmifile.com/webfile/globalimg/mobile/2016/mi5/day01.webm">
+          <source type="video/mp4" data-src="//i01.appmifile.com/webfile/globalimg/mobile/2016/mi5/day01.mp4">
+        </video>
+
+        <video class="m-video hide J_video" id="J_play2" data-index="2">
+          <source type="video/webm" data-src="http://c1.mifile.cn/f/i/15/quantie/videos/unit.webm">
+          <source type="video/mp4" data-src="http://c1.mifile.cn/f/i/15/quantie/videos/unit.mp4">
+        </video>
+
+        <video class="m-video hide J_video" id="J_play3" data-index="3">
+          <source type="video/webm" data-src="//i01.appmifile.com/webfile/globalimg/mobile/2016/mi5/day02.webm">
+          <source type="video/mp4" data-src="//i01.appmifile.com/webfile/globalimg/mobile/2016/mi5/day02.mp4">
+        </video>
+
+        <ul class="video-list" id="J_videoList">
+          <li class="active J_videoItem" id="J_videoItem1" data-index="1" data-flag="pause">
+            <i class="border-circle video-play-paused"></i>
+          </li>
+
+          <li class="active J_videoItem" id="J_videoItem2" data-index="2" data-flag="pause">
+            <i class="border-circle video-play-paused"></i>
+          </li>
+
+          <li class="active J_videoItem" id="J_videoItem3" data-index="3" data-flag="pause">
+            <i class="border-circle video-play-paused"></i>
+          </li>
+        </ul>
+      </section>
+    </div>
+    <script src="../../libs/js/zepto.min.js"></script>
+    <script src="./index.js"></script>
+  </body>
+</html>
