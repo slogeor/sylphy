@@ -1,28 +1,25 @@
-/*\
-|*|
-|*|  :: cookies.js ::
-|*|
-|*|  A complete cookies reader/writer framework with full unicode support.
-|*|
-|*|  https://developer.mozilla.org/en-US/docs/DOM/document.cookie
-|*|
-|*|  This framework is released under the GNU Public License, version 3 or later.
-|*|  http://www.gnu.org/licenses/gpl-3.0-standalone.html
-|*|
-|*|  Syntaxes:
-|*|
-|*|  * docCookies.setItem(name, value[, end[, path[, domain[, secure]]]])
-|*|  * docCookies.getItem(name)
-|*|  * docCookies.removeItem(name[, path], domain)
-|*|  * docCookies.hasItem(name)
-|*|  * docCookies.keys()
-|*|
-\*/
-
-var docCookies = {
+/**
+ * API
+ * Cookies.setItem(name, value[, end[, path[, domain[, secure]]]])
+ * Cookies.getItem(name)
+ * Cookies.removeItem(name[, path], domain)
+ * Cookies.hasItem(name)
+ * Cookies.keys()
+ */
+var Cookies = {
+  //得到cookie
   getItem: function(sKey) {
     return decodeURIComponent(document.cookie.replace(new RegExp("(?:(?:^|.*;)\\s*" + encodeURIComponent(sKey).replace(/[\-\.\+\*]/g, "\\$&") + "\\s*\\=\\s*([^;]*).*$)|^.*$"), "$1")) || null;
   },
+  /**
+   * 写入cookie
+   * @param sKey    [cookie的名字]  必要
+   * @param sValue  [cookie的值]  必要
+   * @param vEnd    [最大年龄的秒数， 永不过期的cookie为Infinity] 可选
+   * @param sPath   [路径] 可选
+   * @param sDomain [域名部分] 可选
+   * @param bSecure [cookie只会被https传输] 可选
+   */
   setItem: function(sKey, sValue, vEnd, sPath, sDomain, bSecure) {
     if (!sKey || /^(?:expires|max\-age|path|domain|secure)$/i.test(sKey)) {
       return false;
@@ -44,6 +41,7 @@ var docCookies = {
     document.cookie = encodeURIComponent(sKey) + "=" + encodeURIComponent(sValue) + sExpires + (sDomain ? "; domain=" + sDomain : "") + (sPath ? "; path=" + sPath : "") + (bSecure ? "; secure" : "");
     return true;
   },
+  //移除cookie
   removeItem: function(sKey, sPath, sDomain) {
     if (!sKey || !this.hasItem(sKey)) {
       return false;
@@ -51,9 +49,12 @@ var docCookies = {
     document.cookie = encodeURIComponent(sKey) + "=; expires=Thu, 01 Jan 1970 00:00:00 GMT" + (sDomain ? "; domain=" + sDomain : "") + (sPath ? "; path=" + sPath : "");
     return true;
   },
+  //检测cookie
   hasItem: function(sKey) {
     return (new RegExp("(?:^|;\\s*)" + encodeURIComponent(sKey).replace(/[\-\.\+\*]/g, "\\$&") + "\\s*\\=")).test(document.cookie);
   },
+
+  //得到所有cookie的列表
   keys: function() { /* optional method: you can safely remove it! */
     var aKeys = document.cookie.replace(/((?:^|\s*;)[^\=]+)(?=;|$)|^\s*|\s*(?:\=[^;]*)?(?:\1|$)/g, "").split(/\s*(?:\=[^;]*)?;\s*/);
     for (var nIdx = 0; nIdx < aKeys.length; nIdx++) {

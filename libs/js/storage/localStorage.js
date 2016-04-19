@@ -1,9 +1,8 @@
 /**
  * @description 本地存储
- * @author xiaomi
+ * @author slogeor
  * @date 2016-04-07
  */
-'use strict';
 function Storage(options) {
   //代理对象，默认为localstorage
   this.sProxy = window.localStorage;
