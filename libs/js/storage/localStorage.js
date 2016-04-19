@@ -1,226 +1,142 @@
-function Storage() {
+/**
+ * @description 本地存储
+ * @author xiaomi
+ * @date 2016-04-07
+ */
+'use strict';
+function Storage(options) {
   //代理对象，默认为localstorage
   this.sProxy = window.localStorage;
-
-  //60 * 60 * 24 * 30 * 1000 ms ==30天
-  this.defaultLifeTime = 2592000000;
-
-  //本地缓存用以存放所有localstorage键值与过期日期的映射
-  this.keyCache = 'SYSTEM_KEY_TIMEOUT_MAP';
-
-  //当缓存容量已满，每次删除的缓存数
-  this.removeNum = 5;
-
 }
+
 Storage.prototype = {
   constructor: Storage,
-  assert: function() {
-    if (this.sProxy === null) {
-      throw 'not override sProxy property';
-    }
-  },
-
-  initialize: function(opts) {
-    this.propertys();
-    this.assert();
-  },
-
-  /*
-  新增localstorage
-  数据格式包括唯一键值，json字符串，过期日期，存入日期
-  sign 为格式化后的请求参数，用于同一请求不同参数时候返回新数据，比如列表为北京的城市，后切换为上海，会判断tag不同而更新缓存数据，tag相当于签名
-  每一键值只会缓存一条信息
-  */
-  set: function(key, value, timeout, sign) {
-    var _d = new Date();
-    //存入日期
-    var indate = _d.getTime();
-
-    //最终保存的数据
-    var entity = null;
-
-    if (!timeout) {
-      _d.setTime(_d.getTime() + this.defaultLifeTime);
-      timeout = _d.getTime();
-    }
-
-    //
-    this.setKeyCache(key, timeout);
-    entity = this.buildStorageObj(value, indate, timeout, sign);
-
-    //存储
-    try {
-      this.sProxy.setItem(key, JSON.stringify(entity));
-      return true;
-    } catch (e) {
-      //localstorage写满时,全清掉
-      if (e.name == 'QuotaExceededError') {
-        //            this.sProxy.clear();
-        //localstorage写满时，选择离过期时间最近的数据删除，这样也会有些影响，但是感觉比全清除好些，如果缓存过多，此过程比较耗时，100ms以内
-        if (!this.removeLastCache()) throw '本次数据存储量过大';
-        this.set(key, value, timeout, sign);
-      }
-      console && console.log(e);
-    }
-    return false;
-  },
-
-  //删除过期缓存
-  removeOverdueCache: function() {
-    var tmpObj = null,
-      i, len;
-
-    var now = new Date().getTime();
-    //取出键值对
-    var cacheStr = this.sProxy.getItem(this.keyCache);
-    var cacheMap = [];
-    var newMap = [];
-    if (!cacheStr) {
-      return;
-    }
-
-    cacheMap = JSON.parse(cacheStr);
-
-    for (i = 0, len = cacheMap.length; i < len; i++) {
-      tmpObj = cacheMap[i];
-      if (tmpObj.timeout < now) {
-        this.sProxy.removeItem(tmpObj.key);
-      } else {
-        newMap.push(tmpObj);
-      }
-    }
-    this.sProxy.setItem(this.keyCache, JSON.stringify(newMap));
-
-  },
-
-  removeLastCache: function() {
-    var i, len;
-    var num = this.removeNum || 5;
-
-    //取出键值对
-    var cacheStr = this.sProxy.getItem(this.keyCache);
-    var cacheMap = [];
-    var delMap = [];
-
-    //说明本次存储过大
-    if (!cacheStr) return false;
-
-    cacheMap.sort(function(a, b) {
-      return a.timeout - b.timeout;
-    });
-
-    //删除了哪些数据
-    delMap = cacheMap.splice(0, num);
-    for (i = 0, len = delMap.length; i < len; i++) {
-      this.sProxy.removeItem(delMap[i].key);
-    }
-
-    this.sProxy.setItem(this.keyCache, JSON.stringify(cacheMap));
-    return true;
-  },
-
-  //设置缓存
-  setKeyCache: function(key, timeout) {
-    if (!key || !timeout || timeout < new Date().getTime()) return;
-
-    var i, len, tmpObj;
-
-    //获取当前已经缓存的键值字符串
-    var oldstr = this.sProxy.getItem(this.keyCache);
-    var oldMap = [];
-    //当前key是否已经存在
-    var flag = false;
-    var obj = {};
-    obj.key = key;
-    obj.timeout = timeout;
-
-    if (oldstr) {
-      oldMap = JSON.parse(oldstr);
-      if (Object.prototype.toString.call(oldMap) !== "[object Array]") oldMap = [];
-    }
-
-    for (i = 0, len = oldMap.length; i < len; i++) {
-      tmpObj = oldMap[i];
-      if (tmpObj.key == key) {
-        oldMap[i] = obj;
-        flag = true;
-        break;
-      }
-    }
-    if (!flag) oldMap.push(obj);
-    //最后将新数组放到缓存中
-    this.sProxy.setItem(this.keyCache, JSON.stringify(oldMap));
-  },
-
-  // 构建存储对象
-  buildStorageObj: function(value, indate, timeout, sign) {
-    var obj = {
-      value: value,
-      timeout: timeout,
-      sign: sign,
-      indate: indate
-    };
-    return obj;
-  },
-
-  //获取签名
-  getSign: function(key) {
-    var result, sign = null;
+  /**
+   * 获取指定key 的取值
+   * @param key
+   */
+  get: function(key) {
+    var now = new Date().getTime(),
+      result = '';
     try {
       result = this.sProxy.getItem(key);
-      if (result) {
-        result = JSON.parse(result);
-        sign = result && result.sign;
-      }
-    } catch (e) {
-      console && console.log(e);
-    }
-    return sign;
-  },
 
-  // 设置
-  get: function(key, sign) {
-    var result, now = new Date().getTime();
-    try {
-      result = this.sProxy.getItem(key);
       if (!result) return null;
 
-      result = JSON.parse(result);
+      //解析json
+      result = $.parseJSON(result);
 
       //数据过期
-      if (result.timeout < now) return null;
-
-      //需要验证签名
-      if (sign) {
-        if (sign === result.sign) {
-          return result.value;
-        }
+      if (result.timeout < now) {
+        //删除
+        this.remove(key);
         return null;
-      } else {
-        return result.value;
       }
 
+      return result.value;
     } catch (e) {
-      console && console.log(e);
+      throw Error('localStorage undefined');
     }
     return null;
   },
 
-  // 删除缓存
-  remove: function(key) {
-    return this.sProxy.removeItem(key);
+  /**
+   * 添加缓存
+   * @param key
+   * @sMap {
+   *  @param value 取值
+   *  @param timeout 时间戳
+   *  @param updateTime [true: 更新时间戳，false:不更新]
+   * }
+   * @return non
+   */
+  set: function(key, sMap) {
+    if (!key) return;
+    try {
+      //判断是否已存在
+      var oldMap = this.sProxy.getItem(key);
+
+      if (oldMap) {
+        //更新
+        this.update(key, sMap);
+      } else {
+        //设置有效期
+        sMap.timeout = new Date().getTime() + sMap.timeout;
+
+        this.sProxy.setItem(key, JSON.stringify(sMap));
+      }
+    } catch (e) {
+      throw Error('localStorage undefined');
+    }
   },
 
-  //清空缓存
+  /**
+   * 更新缓存
+   * @param key
+   * @sMap {
+   *  @param value 取值
+   *  @param timeout 时间戳
+   *  @param updateTime [true: 更新时间戳，false:不更新]
+   * }
+   * @return non
+   */
+  update: function(key, sMap) {
+    try {
+      if (sMap.updateTime) {
+        //全量更新
+
+        //设置有效期
+        sMap.timeout = new Date().getTime() + sMap.timeout;
+
+        this.sProxy.setItem(key, JSON.stringify(sMap));
+      } else {
+        //不更新时间
+        var oldMap = this.sProxy.getItem(key);
+        var newMap = $.extend(true, {}, sMap);
+        newMap.timeout = sMap.timeout;
+        this.sProxy.setItem(key, JSON.stringify(newMap));
+      }
+    } catch (e) {
+      throw Error('localStorage undefined');
+    }
+  },
+
+  /**
+   * 删除缓存
+   * @param key
+   * @return non
+   */
+  remove: function(key) {
+    if (!key) return;
+    try {
+      this.sProxy.removeItem(key);
+    } catch (e) {
+      throw Error('localStorage undefined');
+    }
+  },
+
+  /**
+   * 清空缓存
+   * @return non
+   */
   clear: function() {
-    this.sProxy.clear();
+    try {
+      this.sProxy.clear();
+    } catch (e) {
+      throw Error('localStorage undefined');
+    }
   }
 };
 
 Storage.getInstance = function() {
-  if (this.instance) {
-    return this.instance;
-  } else {
-    return this.instance = new this();
+  if (!this.instance) {
+    this.instance = new this();
   }
+
+  return this.instance;
 };
+
+window.storage = Storage.getInstance();
+
+//TODO
+//1. 个数限制
